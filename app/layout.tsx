@@ -30,8 +30,7 @@ const APP_DESCRIPTION =
   '神社でおみくじを引くような静謐な体験。24節気の暦に寄り添い、一日一枚の和タロットを綴る。'
 
 // metadataBase: 絶対 URL 生成（og:image 等）の基準。
-// ⚠ 本番デプロイ時に独自ドメインへ置換すること。現在は Vercel デフォルトの仮値。
-const SITE_URL = 'https://wa-no-koyomi-tarot.vercel.app'
+const SITE_URL = 'https://daily-tarot-app-gamma.vercel.app'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
