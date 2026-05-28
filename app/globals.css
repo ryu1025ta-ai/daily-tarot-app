@@ -1,0 +1,3861 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Japanese aesthetic color palette */
+  --background: #F5F0E8; /* Washi paper */
+  --foreground: #1A1614; /* Sumi ink black */
+  --card: #FFFCF7; /* Lighter washi */
+  --card-foreground: #1A1614;
+  --popover: #FFFCF7;
+  --popover-foreground: #1A1614;
+  --primary: #A8341F; /* Torii vermillion */
+  --primary-foreground: #FFFCF7;
+  --secondary: #EDE8DE; /* Soft washi */
+  --secondary-foreground: #1A1614;
+  --muted: #E8E2D6;
+  --muted-foreground: #6B645A;
+  --accent: #B8941F; /* Gold */
+  --accent-foreground: #1A1614;
+  --destructive: #A8341F;
+  --destructive-foreground: #FFFCF7;
+  --border: rgba(26, 22, 20, 0.12);
+  --input: rgba(26, 22, 20, 0.08);
+  --ring: #A8341F;
+  --radius: 0.375rem;
+  
+  /* Custom tokens for this app */
+  --washi: #F5F0E8;
+  --washi-light: #FFFCF7;
+  --washi-dark: #EDE8DE;
+  --sumi: #1A1614;
+  --torii: #A8341F;
+  --gold: #B8941F;
+  --shadow: rgba(26, 22, 20, 0.06);
+  --shadow-medium: rgba(26, 22, 20, 0.10);
+  --shadow-strong: rgba(26, 22, 20, 0.16);
+}
+
+.dark {
+  /* Night tea room aesthetic */
+  --background: #1A1614;
+  --foreground: #E8E2D6;
+  --card: #252220;
+  --card-foreground: #E8E2D6;
+  --popover: #252220;
+  --popover-foreground: #E8E2D6;
+  --primary: #C9553E; /* Softer vermillion for dark */
+  --primary-foreground: #1A1614;
+  --secondary: #2A2725;
+  --secondary-foreground: #E8E2D6;
+  --muted: #2A2725;
+  --muted-foreground: #8A837A;
+  --accent: #D4A920; /* Brighter gold for dark */
+  --accent-foreground: #1A1614;
+  --destructive: #C9553E;
+  --destructive-foreground: #1A1614;
+  --border: rgba(232, 226, 214, 0.12);
+  --input: rgba(232, 226, 214, 0.08);
+  --ring: #C9553E;
+
+  --washi: #252220;
+  --washi-light: #2F2C2A;
+  --washi-dark: #1A1614;
+  --sumi: #E8E2D6;
+  --torii: #C9553E;
+  --gold: #D4A920;
+  --shadow: rgba(0, 0, 0, 0.15);
+  --shadow-medium: rgba(0, 0, 0, 0.25);
+  --shadow-strong: rgba(0, 0, 0, 0.35);
+}
+
+/* ---------------------------------------------------------------------------
+   5段階時間帯テーマ（data-theme 属性で切替）。
+   day / night は :root と .dark を踏襲し、dawn / dusk / evening を新規定義。
+   30秒トランジションでなめらかに切り替わる。
+   --------------------------------------------------------------------------- */
+
+:root,
+[data-theme] {
+  transition:
+    background-color 1800ms ease,
+    color 1800ms ease;
+}
+
+/* day テーマ：既存 :root と同等（明示） */
+[data-theme="day"] {
+  --background: #F5F0E8;
+  --foreground: #1A1614;
+  --card: #FFFCF7;
+  --card-foreground: #1A1614;
+  --popover: #FFFCF7;
+  --popover-foreground: #1A1614;
+  --primary: #A8341F;
+  --primary-foreground: #FFFCF7;
+  --secondary: #EDE8DE;
+  --secondary-foreground: #1A1614;
+  --muted: #E8E2D6;
+  --muted-foreground: #6B645A;
+  --accent: #B8941F;
+  --accent-foreground: #1A1614;
+  --destructive: #A8341F;
+  --destructive-foreground: #FFFCF7;
+  --border: rgba(26, 22, 20, 0.12);
+  --input: rgba(26, 22, 20, 0.08);
+  --ring: #A8341F;
+
+  --washi: #F5F0E8;
+  --washi-light: #FFFCF7;
+  --washi-dark: #EDE8DE;
+  --sumi: #1A1614;
+  --torii: #A8341F;
+  --gold: #B8941F;
+  --shadow: rgba(26, 22, 20, 0.06);
+  --shadow-medium: rgba(26, 22, 20, 0.10);
+  --shadow-strong: rgba(26, 22, 20, 0.16);
+}
+
+/* dawn 暁の障子（薄茜・霧） */
+[data-theme="dawn"] {
+  --background: #F5E6D3;
+  --foreground: #5A4A3A;
+  --card: #FFF5E6;
+  --card-foreground: #5A4A3A;
+  --popover: #FFF5E6;
+  --popover-foreground: #5A4A3A;
+  --primary: #C46B4A;          /* 朝焼けの朱 */
+  --primary-foreground: #FFF5E6;
+  --secondary: #EDDBC6;
+  --secondary-foreground: #5A4A3A;
+  --muted: #E8D3BB;
+  --muted-foreground: #8A6F58;
+  --accent: #B8860B;            /* 深朝 */
+  --accent-foreground: #5A4A3A;
+  --destructive: #A8341F;
+  --destructive-foreground: #FFF5E6;
+  --border: rgba(90, 74, 58, 0.14);
+  --input: rgba(90, 74, 58, 0.08);
+  --ring: #C46B4A;
+
+  --washi: #F5E6D3;
+  --washi-light: #FFF5E6;
+  --washi-dark: #EDDBC6;
+  --sumi: #5A4A3A;
+  --torii: #C46B4A;
+  --gold: #B8860B;
+  --shadow: rgba(90, 74, 58, 0.08);
+  --shadow-medium: rgba(90, 74, 58, 0.12);
+  --shadow-strong: rgba(90, 74, 58, 0.18);
+}
+
+/* dusk 黄昏の縁（茜茶・夕光） */
+[data-theme="dusk"] {
+  --background: #F4DEC0;
+  --foreground: #5A3A1A;
+  --card: #FAEAD0;
+  --card-foreground: #5A3A1A;
+  --popover: #FAEAD0;
+  --popover-foreground: #5A3A1A;
+  --primary: #B85825;
+  --primary-foreground: #FAEAD0;
+  --secondary: #ECD3AB;
+  --secondary-foreground: #5A3A1A;
+  --muted: #E0C597;
+  --muted-foreground: #826045;
+  --accent: #C68A2E;
+  --accent-foreground: #5A3A1A;
+  --destructive: #A8341F;
+  --destructive-foreground: #FAEAD0;
+  --border: rgba(90, 58, 26, 0.14);
+  --input: rgba(90, 58, 26, 0.08);
+  --ring: #B85825;
+
+  --washi: #F4DEC0;
+  --washi-light: #FAEAD0;
+  --washi-dark: #ECD3AB;
+  --sumi: #5A3A1A;
+  --torii: #B85825;
+  --gold: #C68A2E;
+  --shadow: rgba(90, 58, 26, 0.08);
+  --shadow-medium: rgba(90, 58, 26, 0.12);
+  --shadow-strong: rgba(90, 58, 26, 0.18);
+}
+
+/* evening 宵の和室（藍紫・行灯の温かい光） */
+[data-theme="evening"] {
+  --background: #3A2E3A;
+  --foreground: #F4E1C1;
+  --card: #45384A;
+  --card-foreground: #F4E1C1;
+  --popover: #45384A;
+  --popover-foreground: #F4E1C1;
+  --primary: #D9885A;
+  --primary-foreground: #3A2E3A;
+  --secondary: #4A3D4F;
+  --secondary-foreground: #F4E1C1;
+  --muted: #4A3D4F;
+  --muted-foreground: #C8B594;
+  --accent: #D4AF37;
+  --accent-foreground: #3A2E3A;
+  --destructive: #D9885A;
+  --destructive-foreground: #3A2E3A;
+  --border: rgba(244, 225, 193, 0.14);
+  --input: rgba(244, 225, 193, 0.08);
+  --ring: #D9885A;
+
+  --washi: #45384A;
+  --washi-light: #50425A;
+  --washi-dark: #3A2E3A;
+  --sumi: #F4E1C1;
+  --torii: #D9885A;
+  --gold: #D4AF37;
+  --shadow: rgba(0, 0, 0, 0.20);
+  --shadow-medium: rgba(0, 0, 0, 0.30);
+  --shadow-strong: rgba(0, 0, 0, 0.40);
+}
+
+/* night 深夜の月光（深藍・銀） */
+[data-theme="night"] {
+  --background: #1A1A2E;
+  --foreground: #E8E2D6;
+  --card: #252238;
+  --card-foreground: #E8E2D6;
+  --popover: #252238;
+  --popover-foreground: #E8E2D6;
+  --primary: #C9553E;
+  --primary-foreground: #1A1A2E;
+  --secondary: #2A2740;
+  --secondary-foreground: #E8E2D6;
+  --muted: #2A2740;
+  --muted-foreground: #8A839A;
+  --accent: #C0C0C8;            /* 銀月 */
+  --accent-foreground: #1A1A2E;
+  --destructive: #C9553E;
+  --destructive-foreground: #1A1A2E;
+  --border: rgba(232, 226, 214, 0.12);
+  --input: rgba(232, 226, 214, 0.08);
+  --ring: #C9553E;
+
+  --washi: #252238;
+  --washi-light: #2F2C45;
+  --washi-dark: #1A1A2E;
+  --sumi: #E8E2D6;
+  --torii: #C9553E;
+  --gold: #C0C0C8;
+  --shadow: rgba(0, 0, 0, 0.25);
+  --shadow-medium: rgba(0, 0, 0, 0.35);
+  --shadow-strong: rgba(0, 0, 0, 0.45);
+}
+
+@theme inline {
+  --font-sans: 'Noto Sans JP', sans-serif;
+  --font-serif: 'Noto Serif JP', serif;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-cormorant: 'Cormorant Garamond', serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  
+  /* Custom color tokens */
+  --color-washi: var(--washi);
+  --color-washi-light: var(--washi-light);
+  --color-washi-dark: var(--washi-dark);
+  --color-sumi: var(--sumi);
+  --color-torii: var(--torii);
+  --color-gold: var(--gold);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Washi paper texture effect - subtle noise overlay (5-8% opacity) */
+.washi-texture {
+  position: relative;
+}
+
+.washi-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.washi-texture > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Card washi texture - fiber pattern for card surfaces */
+.card-washi-texture {
+  position: relative;
+}
+
+.card-washi-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fiber'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='6' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fiber)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Shoji light gradient - morning light through paper screens */
+.shoji-light {
+  background: linear-gradient(
+    180deg,
+    #F8F4ED 0%,
+    #F5F0E8 40%,
+    #F0EBE0 100%
+  );
+}
+
+.dark .shoji-light {
+  background: linear-gradient(
+    180deg,
+    #1E1B19 0%,
+    #1A1614 40%,
+    #161412 100%
+  );
+}
+
+/* Central ambient glow - card floating area */
+.ambient-glow {
+  position: relative;
+}
+
+.ambient-glow::after {
+  content: '';
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 252, 247, 0.4) 0%,
+    rgba(255, 252, 247, 0) 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .ambient-glow::after {
+  background: radial-gradient(
+    circle,
+    rgba(47, 44, 42, 0.5) 0%,
+    rgba(47, 44, 42, 0) 70%
+  );
+}
+
+/* Multi-layer card shadow */
+.card-shadow {
+  box-shadow: 
+    0 1px 2px var(--shadow),
+    0 2px 4px var(--shadow),
+    0 4px 8px var(--shadow-medium),
+    0 8px 16px var(--shadow);
+}
+
+/* Gold border for cards */
+.gold-border {
+  box-shadow: 
+    inset 0 0 0 1px rgba(184, 148, 31, 0.3),
+    0 1px 2px var(--shadow),
+    0 2px 4px var(--shadow),
+    0 4px 8px var(--shadow-medium),
+    0 8px 16px var(--shadow);
+}
+
+/* Smooth transitions for the app */
+.transition-slow {
+  transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-medium {
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hide scrollbar but keep functionality */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Vermillion seal (hanko) style */
+.vermillion-seal {
+  color: var(--torii);
+  font-family: var(--font-serif);
+}
+
+/* Ink brush style text */
+.sumi-text {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  line-height: 1.9;
+  letter-spacing: 0.05em;
+}
+
+/* Gold decorative line */
+.gold-line {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--gold) 20%,
+    var(--gold) 80%,
+    transparent 100%
+  );
+  opacity: 0.4;
+}
+
+/* Floating animation keyframes */
+@keyframes gentle-float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3px) rotate(0.3deg);
+  }
+  75% {
+    transform: translateY(2px) rotate(-0.3deg);
+  }
+}
+
+.animate-float {
+  animation: gentle-float 6s ease-in-out infinite;
+}
+
+/* Safe area padding for iOS */
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* =============================================================================
+   レア度ごとのカード本体スタイル（墨 / 藍 / 朱 / 金）
+   .rarity-{rarity} を card 表示の wrapper（home の DrawnContent / 暦 Drawer /
+   tarot-card 等）に付与すると、背景・枠・カード名色・シンボル色が連動して変わる。
+   ============================================================================= */
+
+/* シンボル（CardSymbol の SVG）の color。currentColor 経由で全 stroke/fill に反映 */
+.rarity-symbol-common    { color: var(--rarity-common-color); }
+.rarity-symbol-rare      { color: var(--rarity-rare-color); }
+.rarity-symbol-epic      { color: var(--rarity-epic-color); }
+.rarity-symbol-legendary { color: var(--rarity-legendary-color); }
+
+/* カード本体の背景（card-washi-texture の Tailwind gradient を上書き） */
+.rarity-common .card-washi-texture {
+  background: linear-gradient(
+    180deg,
+    var(--rarity-common-bg-top) 0%,
+    var(--rarity-common-bg-mid) 60%,
+    var(--rarity-common-bg-end) 100%
+  ) !important;
+}
+.rarity-rare .card-washi-texture {
+  background: linear-gradient(
+    180deg,
+    var(--rarity-rare-bg-top) 0%,
+    var(--rarity-rare-bg-mid) 50%,
+    var(--rarity-rare-bg-end) 100%
+  ) !important;
+}
+.rarity-epic .card-washi-texture {
+  background: linear-gradient(
+    180deg,
+    var(--rarity-epic-bg-top) 0%,
+    var(--rarity-epic-bg-mid) 50%,
+    var(--rarity-epic-bg-end) 100%
+  ) !important;
+}
+.rarity-legendary .card-washi-texture {
+  background: linear-gradient(
+    135deg,
+    var(--rarity-legendary-bg-1) 0%,
+    var(--rarity-legendary-bg-2) 50%,
+    var(--rarity-legendary-bg-3) 100%
+  ) !important;
+  background-size: 200% 200% !important;
+  /* 45s 固定。!important で .is-ritual.is-legendary 等の上書きを物理的に防止 */
+  animation: gold-flow 45s ease-in-out infinite !important;
+}
+
+/* カード枠（gold-border / chosen-front-face の box-shadow を上書き） */
+.rarity-common .chosen-front-face,
+.rarity-common .gold-border {
+  box-shadow:
+    inset 0 0 0 1px var(--rarity-common-border),
+    0 1px 2px var(--shadow),
+    0 4px 12px var(--shadow-medium);
+}
+.rarity-rare .chosen-front-face,
+.rarity-rare .gold-border {
+  box-shadow:
+    inset 0 0 0 1.5px var(--rarity-rare-border),
+    0 1px 2px var(--shadow),
+    0 4px 12px var(--shadow-medium);
+}
+.rarity-epic .chosen-front-face,
+.rarity-epic .gold-border {
+  box-shadow:
+    inset 0 0 0 1.5px var(--rarity-epic-border),
+    0 1px 2px var(--shadow),
+    0 4px 12px var(--shadow-medium);
+}
+.rarity-legendary .chosen-front-face,
+.rarity-legendary .gold-border {
+  box-shadow:
+    inset 0 0 0 2px var(--rarity-legendary-border),
+    inset 0 0 8px rgba(212, 160, 23, 0.30),
+    0 1px 2px var(--shadow),
+    0 4px 12px var(--shadow-medium);
+}
+
+/* カード名（chosen-name h3 / 暦 Drawer 内の h3 名） */
+.rarity-common .chosen-name h3,
+.rarity-common .card-name-text {
+  color: var(--rarity-common-color);
+}
+.rarity-rare .chosen-name h3,
+.rarity-rare .card-name-text {
+  color: var(--rarity-rare-color);
+}
+.rarity-epic .chosen-name h3,
+.rarity-epic .card-name-text {
+  color: var(--rarity-epic-color);
+}
+.rarity-legendary .chosen-name h3,
+.rarity-legendary .card-name-text {
+  color: var(--rarity-legendary-color);
+  text-shadow:
+    0 0 6px rgba(212, 160, 23, 0.50),
+    0 0 14px rgba(212, 160, 23, 0.25);
+}
+
+/* gold-flow：legendary の背景グラデーションが緩やかに流れる */
+@keyframes gold-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* =============================================================================
+   SVG シンボルのレア度別アニメーション（v3：カードごと固有・大胆）
+   設計原則：
+     - 78枚それぞれ固有のアニメ（カードの意味と物語を表現）
+     - レア度はアニメの「強度」のみ規定（同じパターンの必要なし）
+     - サムネは静止、詳細画面（.is-card-animated）でのみ動く
+     - opacity / transform のみで GPU 合成、低スペック端末でも 60fps
+     - 時間帯（dawn/day/dusk/evening/night）でアニメ速度を補正
+     - 季節（spring/summer/autumn/winter）で色味を微妙に補正
+     - 長押し 600ms で隠し演出（data-hidden-active）
+
+   レア度別強度：
+     常 (40) → 控えめだが必ず動く（静止禁止）
+     稀 (14) → 個性的に動く、象徴に応じた動き
+     貴 (16) → しっかり動く、カード固有の要素が動く
+     極  (8) → 派手・大胆・明確に動く
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   時間帯モジュレーション：--anim-speed-mult を子孫の animation-duration に反映。
+   深夜は遅め（瞑想的）、昼は速め（活発）。
+   ----------------------------------------------------------------------------- */
+.is-card-animated                          { --anim-speed-mult: 1.00; }
+.is-card-animated[data-time="dawn"]        { --anim-speed-mult: 0.92; }
+.is-card-animated[data-time="day"]         { --anim-speed-mult: 0.85; }
+.is-card-animated[data-time="dusk"]        { --anim-speed-mult: 1.00; }
+.is-card-animated[data-time="evening"]     { --anim-speed-mult: 1.10; }
+.is-card-animated[data-time="night"]       { --anim-speed-mult: 1.22; }
+
+/* -----------------------------------------------------------------------------
+   季節モジュレーション：filter で全体の色温度を微妙にシフト。
+   春・夏は中性、秋は暖色（赤寄り）、冬は寒色（青寄り）。
+   朱印が真っ赤すぎる季節は hue-rotate で抑える。
+   ----------------------------------------------------------------------------- */
+.is-card-animated[data-season="spring"]    { filter: saturate(1.02) hue-rotate(0deg); }
+.is-card-animated[data-season="summer"]    { filter: saturate(1.06) hue-rotate(-2deg); }
+.is-card-animated[data-season="autumn"]    { filter: saturate(1.05) hue-rotate(-8deg); }
+.is-card-animated[data-season="winter"]    { filter: saturate(0.92) hue-rotate(8deg); }
+
+/* -----------------------------------------------------------------------------
+   稀（rare＝大アルカナ非極 14 枚）：四隅の麻の葉が極めて微かに明滅。
+   ※ 個別のカード固有アニメは Phase 次回。今はレア度シェア装飾のみ。
+   ----------------------------------------------------------------------------- */
+@keyframes rare-deco-shimmer {
+  0%, 100% { opacity: 0.36; }
+  50%      { opacity: 0.50; }
+}
+.is-card-animated .rarity-deco-asanoha {
+  animation: rare-deco-shimmer calc(9s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* -----------------------------------------------------------------------------
+   貴（epic＝小アルカナコート 16 枚）：青海波と巴紋が呼吸。
+   ※ 個別のカード固有アニメは Phase 次回。今はレア度シェア装飾のみ。
+   ----------------------------------------------------------------------------- */
+@keyframes epic-shadow-breath {
+  0%, 100% { opacity: 0.08; }
+  50%      { opacity: 0.20; }
+}
+@keyframes epic-tomoe-breath {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 0.70; transform: scale(1.04); }
+}
+.is-card-animated .rarity-deco-seigaiha {
+  animation: epic-shadow-breath calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .rarity-deco-tomoe {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+  animation: epic-tomoe-breath calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* =============================================================================
+   常（common）数札 40 枚：スート別の動きの質感 × 数別の強度段階
+   設計原則：
+     - 「毎日見るカード」を狙うため、朱印（.text-primary）だけが静かに息づく
+     - 主絵柄（墨絵）は静止保持、雰囲気だけ動く
+     - 極/貴/稀との階段を保つため scale 最大 1.04 / translate ±1〜2px / opacity 振幅 0.15〜0.25
+   軸1（スート別の動きの質感）：
+     杖   (火)：揺らめき = opacity + scale 非対称（炎のような不規則性）
+     聖杯 (水)：波打ち = translateY sine（さざ波の規則的な上下）
+     金貨 (地)：静止（世界観上の判断、バグではない）
+                  地のモチーフ（小判・実り）はどっしり動かないのが世界観に忠実。
+                  火=揺れ / 水=波 / 風=流れ に対し 地=静 で4スートの対比が明確になる。
+                  また Koban の朱印が r=0.25〜0.8 と極小で、opacity 振動を視覚検出
+                  できない構造的制約もあり、無理に動かすメリットがない。
+     剣   (風)：横ドリフト = translateX + opacity（軽やかな流れ）
+   軸2（数別の強度段階、A=最静 → 10=最賑、金貨除く 3 スートに適用）：
+     --common-amp   : 0.55〜1.35（振幅倍率）
+     --common-cycle : 1.80〜0.74（周期倍率、大きいほど遅い）
+   ============================================================================= */
+
+/* スート別 keyframes */
+@keyframes common-fire-flicker {
+  0%, 100% { opacity: 1;    transform: scale(1); }
+  33%      { opacity: 0.75; transform: scale(calc(1 + 0.04 * var(--common-amp, 1))); }
+  66%      { opacity: 0.95; transform: scale(calc(1 - 0.02 * var(--common-amp, 1))); }
+}
+@keyframes common-water-wave {
+  0%, 100% { transform: translateY(0);                                    opacity: 0.95; }
+  50%      { transform: translateY(calc(-1.5px * var(--common-amp, 1))); opacity: 1; }
+}
+/* common-earth-breathe（金貨スート用）は削除済み。
+   金貨(地)の常 10枚は世界観上の判断で「正式に静止」を採用。
+   理由: 地のモチーフ（小判・実り）はどっしり動かないのが世界観に最も忠実。
+        火=揺れ / 水=波 / 風=流れ に対し 地=静 で4スートの対比が明確になる。
+   また Koban 内の朱印が r=0.25〜0.8 と極小で、opacity 振動を視覚検出できない
+   構造的制約もあり、無理に動かすメリットがない。 */
+@keyframes common-wind-drift {
+  0%, 100% { transform: translateX(calc(-0.7px * var(--common-amp, 1))); opacity: 0.90; }
+  50%      { transform: translateX(calc(1.5px * var(--common-amp, 1)));  opacity: 1; }
+}
+
+/* スート別ルール：朱印（.text-primary）のみを動かす。主絵柄は静止保持 */
+.is-card-animated.common-wands .text-primary {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: common-fire-flicker calc(6.5s * var(--common-cycle, 1) * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated.common-cups .text-primary {
+  transform-box: fill-box;
+  animation: common-water-wave calc(5.5s * var(--common-cycle, 1) * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* common-pentacles ルールは意図的に未定義。
+   金貨(地)の常 10枚は世界観上の判断で正式に静止採用（上記コメント参照）。
+   CardSymbol は依然 common-pentacles / common-num-N クラスを付与するが、
+   対応する animation ルールが存在しないため発火しない。
+   class injection 自体は将来の拡張余地として残置（CardSymbol 編集不要）。 */
+
+.is-card-animated.common-swords .text-primary {
+  transform-box: fill-box;
+  animation: common-wind-drift calc(5s * var(--common-cycle, 1) * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* 数別の強度（A〜10、振幅 × 周期の両方を段階的に変える） */
+.is-card-animated.common-num-1  { --common-amp: 0.55; --common-cycle: 1.80; }
+.is-card-animated.common-num-2  { --common-amp: 0.65; --common-cycle: 1.60; }
+.is-card-animated.common-num-3  { --common-amp: 0.75; --common-cycle: 1.45; }
+.is-card-animated.common-num-4  { --common-amp: 0.85; --common-cycle: 1.30; }
+.is-card-animated.common-num-5  { --common-amp: 0.95; --common-cycle: 1.15; }
+.is-card-animated.common-num-6  { --common-amp: 1.05; --common-cycle: 1.00; }
+.is-card-animated.common-num-7  { --common-amp: 1.15; --common-cycle: 0.90; }
+.is-card-animated.common-num-8  { --common-amp: 1.20; --common-cycle: 0.85; }
+.is-card-animated.common-num-9  { --common-amp: 1.25; --common-cycle: 0.80; }
+.is-card-animated.common-num-10 { --common-amp: 1.35; --common-cycle: 0.74; }
+
+/* =============================================================================
+   極（legendary）共通：舞台フレーム（亀甲 + 金箔）。
+   per-card 固有アニメに対する「金色の額縁」として控えめに脈動。
+   ============================================================================= */
+@keyframes kikko-pulse {
+  0%, 100% { opacity: 0.65; }
+  50%      { opacity: 1; }
+}
+@keyframes gold-leaf-swirl {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 0.85; }
+}
+.is-card-animated .rarity-deco-kikko-bg {
+  animation: kikko-pulse calc(10s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .rarity-deco-gold-leaf {
+  animation: gold-leaf-swirl calc(10s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* =============================================================================
+   極 0 愚者 (The Fool)：旅立ち、軽やかさ、舞い散る桜
+   - 振分け荷物が大きく揺れる（±10°、5s）
+   - 5 枚の花弁が時差で落下＋横ドリフト＋フェード
+   - 笠の朱印が脈動
+   - 犬の尻尾がふりふり
+   - 遠景の山並みと流れ雲が静かに動く
+   - 隠し：長押しで桜吹雪が一気に舞う（速度倍、振幅倍）
+   ============================================================================= */
+@keyframes fool-bag-swing {
+  0%, 100% { transform: rotate(-10deg); }
+  50%      { transform: rotate(10deg); }
+}
+.is-card-animated .fool-bag {
+  transform-box: view-box;
+  /* 縦構図再設計後、杖の先端（包みの結び目）が (74, 25) に移動 */
+  transform-origin: 74px 25px;
+  animation: fool-bag-swing calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes fool-hat-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.5);  opacity: 0.7; }
+}
+/* 朝日の朱印（背後から昇る朝日の中心、控えめ脈動） */
+@keyframes fool-sunrise-glow {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.35); opacity: 0.7; }
+}
+.is-card-animated .fool-sunrise {
+  transform-box: view-box;
+  transform-origin: 80px 14px;
+  animation: fool-sunrise-glow calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .fool-hat-seal {
+  transform-box: view-box;
+  /* 縦構図再設計後、笠の頂点朱印が (50, 21) に移動 */
+  transform-origin: 50px 21px;
+  animation: fool-hat-pulse calc(3.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes fool-mountain-sway {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(2px); }
+}
+.is-card-animated .fool-mountains {
+  transform-box: view-box;
+  animation: fool-mountain-sway calc(14s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes fool-cloud-drift {
+  0%   { transform: translateX(-4px); opacity: 0.45; }
+  50%  { transform: translateX(6px);  opacity: 0.55; }
+  100% { transform: translateX(-4px); opacity: 0.45; }
+}
+.is-card-animated .fool-cloud {
+  transform-box: view-box;
+  animation: fool-cloud-drift calc(11s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes fool-tail-wag {
+  0%, 100% { transform: rotate(-15deg); }
+  50%      { transform: rotate(15deg); }
+}
+.is-card-animated .fool-dog-tail {
+  transform-box: view-box;
+  /* 縦構図再設計後、犬が (62, 73) に移動。尾の付け根は (66.5, 71) */
+  transform-origin: 66.5px 71px;
+  animation: fool-tail-wag calc(1.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* 花弁：上方から下方へ流れ、終端で消えてループ。位相を別々に。 */
+@keyframes fool-petal-fall {
+  0%   { transform: translate(0, -8px) rotate(0deg);   opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translate(var(--drift, 6px), 32px) rotate(140deg); opacity: 0; }
+}
+.is-card-animated .fool-petal {
+  transform-box: view-box;
+  animation: fool-petal-fall calc(7s * var(--anim-speed-mult, 1)) ease-in infinite;
+}
+.is-card-animated .fool-petal-1 { --drift:  6px; animation-delay: -0.5s; }
+.is-card-animated .fool-petal-2 { --drift: -8px; animation-delay: -2.2s; }
+.is-card-animated .fool-petal-3 { --drift:  4px; animation-delay: -3.8s; }
+.is-card-animated .fool-petal-4 { --drift: -5px; animation-delay: -5.1s; }
+.is-card-animated .fool-petal-5 { --drift:  7px; animation-delay: -6.4s; }
+/* 隠し：桜吹雪（速度倍 + 振幅倍） */
+.is-card-animated.card-major-00[data-hidden-active] .fool-petal {
+  animation-duration: calc(2.4s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-00[data-hidden-active] .fool-bag {
+  animation-duration: calc(1.6s * var(--anim-speed-mult, 1));
+}
+
+/* =============================================================================
+   極 10 運命の輪 (Wheel of Fortune)：巡り、転機、流れ
+   - 八輻スポークが順回転（10s）
+   - 外円の 12 命運点が逆回転（18s）
+   - 中心の朱印（軸）が脈動
+   - 隠し：長押しで両輪が急加速 → ゆっくり減速（運命のスロット）
+   ============================================================================= */
+@keyframes wheel-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes wheel-rotate-rev {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+.is-card-animated .wheel-spokes {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+  animation: wheel-rotate calc(10s * var(--anim-speed-mult, 1)) linear infinite;
+}
+.is-card-animated .wheel-outer {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+  animation: wheel-rotate-rev calc(18s * var(--anim-speed-mult, 1)) linear infinite;
+}
+@keyframes wheel-hub-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.35); opacity: 0.75; }
+}
+.is-card-animated .wheel-hub {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+  animation: wheel-hub-pulse calc(2.6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* 太極の両眼：陽（朱）と陰（墨）が交互に脈動（運命の輪の中心、静かな源） */
+@keyframes wheel-eye-on {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(1.5); opacity: 0.7; }
+}
+@keyframes wheel-eye-off {
+  0%, 100% { transform: scale(1.5); opacity: 0.7; }
+  50%      { transform: scale(1);   opacity: 1; }
+}
+.is-card-animated .wheel-yang-eye {
+  transform-box: view-box;
+  transform-origin: 50px 45px;
+  animation: wheel-eye-on calc(3.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .wheel-yin-eye {
+  transform-box: view-box;
+  transform-origin: 50px 55px;
+  animation: wheel-eye-off calc(3.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* 隠し：両輪が急加速 + 太極両眼も同時脈動（運命のスロット） */
+.is-card-animated.card-major-10[data-hidden-active] .wheel-spokes {
+  animation-duration: calc(1.2s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-10[data-hidden-active] .wheel-outer {
+  animation-duration: calc(2.0s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-10[data-hidden-active] .wheel-yang-eye,
+.is-card-animated.card-major-10[data-hidden-active] .wheel-yin-eye {
+  animation-duration: calc(1s * var(--anim-speed-mult, 1));
+}
+
+/* =============================================================================
+   極 13 死神 (Death)：終焉、変容、再生
+   - 6 枚の花弁が時差で散る（落下＋ドリフト、ループ）
+   - 鎌の刃が時折ひらめく（10s 周期で 0.3s フラッシュ）
+   - 柄頭が心臓の鼓動のように脈動
+   - 再生の川がゆっくり opacity 揺らぎ
+   - 隠し：長押しで全花弁が同時に散る（一斉葬送）
+   ============================================================================= */
+@keyframes death-petal-fall {
+  0%   { transform: translate(0, 0) rotate(0deg);     opacity: 0; }
+  10%  { opacity: 0.95; }
+  85%  { opacity: 0.7; }
+  100% { transform: translate(var(--drift, 4px), 56px) rotate(180deg); opacity: 0; }
+}
+.is-card-animated .death-petal {
+  transform-box: view-box;
+  animation: death-petal-fall calc(9s * var(--anim-speed-mult, 1)) ease-in infinite;
+}
+.is-card-animated .death-petal-1 { --drift:  6px; animation-delay:  0s; }
+.is-card-animated .death-petal-2 { --drift: -4px; animation-delay: -1.5s; }
+.is-card-animated .death-petal-3 { --drift:  8px; animation-delay: -3s; }
+.is-card-animated .death-petal-4 { --drift: -7px; animation-delay: -4.5s; }
+.is-card-animated .death-petal-5 { --drift:  5px; animation-delay: -6s; }
+.is-card-animated .death-petal-6 { --drift: -3px; animation-delay: -7.5s; }
+@keyframes death-blade-shine {
+  0%, 70%, 100% { opacity: 1; }
+  75%           { opacity: 0.4; }
+  78%           { opacity: 1; filter: drop-shadow(0 0 1.4px rgba(255, 255, 255, 0.8)); }
+  82%           { opacity: 1; filter: drop-shadow(0 0 0 transparent); }
+}
+.is-card-animated .death-blade {
+  animation: death-blade-shine calc(10s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes death-handle-beat {
+  0%, 100% { transform: scale(1);   }
+  45%      { transform: scale(1.18); }
+  55%      { transform: scale(0.95); }
+}
+.is-card-animated .death-handle {
+  transform-box: view-box;
+  /* クオリティアップ版で柄頭が (84, 86) に移動 */
+  transform-origin: 84px 86px;
+  animation: death-handle-beat calc(2.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* NEW: 骸骨の眼窩の朱の光（不穏な眼光、ゆっくり明滅） */
+@keyframes death-skull-glow {
+  0%, 100% { opacity: 0.55; transform: scale(1);    }
+  50%      { opacity: 1;    transform: scale(1.4); }
+}
+.is-card-animated .death-skull-glow {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: death-skull-glow calc(3.2s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* 2 つの眼で位相をずらす（生きているように交互に） */
+.is-card-animated .death-skull-glow:nth-of-type(1) { animation-delay:  0s; }
+.is-card-animated .death-skull-glow:nth-of-type(2) { animation-delay: -1.6s; }
+@keyframes death-river-flow {
+  0%, 100% { opacity: 0.20; transform: translateX(-2px); }
+  50%      { opacity: 0.45; transform: translateX(2px); }
+}
+.is-card-animated .death-river {
+  transform-box: view-box;
+  animation: death-river-flow calc(8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* 隠し：全花弁が一斉に散る（速度倍） */
+.is-card-animated.card-major-13[data-hidden-active] .death-petal {
+  animation-duration: calc(3s * var(--anim-speed-mult, 1));
+  animation-delay: 0s !important;
+}
+
+/* =============================================================================
+   極 16 塔 (The Tower)：崩壊、啓示、解放
+   - 稲妻が間欠的にフラッシュ（8s 周期で 1-2 発）
+   - 塔本体が地震のように微振動
+   - 嵐雲が水平に流れる（左雲・右雲別位相）
+   - 瓦の破片 6 片が落下軌道で散る（時差）
+   - 火の粉 3 個が舞い上がる
+   - 隠し：長押しで稲妻連発 + 振動強化（崩壊の瞬間）
+   ============================================================================= */
+@keyframes tower-lightning-flicker {
+  0%, 30%, 100% { opacity: 0.30; }
+  32%           { opacity: 1; filter: drop-shadow(0 0 2px rgba(185, 28, 28, 0.8)); }
+  34%           { opacity: 0.35; filter: none; }
+  37%           { opacity: 1; }
+  39%           { opacity: 0.30; }
+}
+.is-card-animated .tower-lightning {
+  animation: tower-lightning-flicker calc(8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes tower-shake {
+  0%, 100% { transform: translate(0, 0); }
+  10%      { transform: translate(-0.8px, 0.4px); }
+  20%      { transform: translate(0.8px, -0.4px); }
+  30%      { transform: translate(-0.5px, 0.6px); }
+  40%      { transform: translate(0.6px, 0.3px); }
+  50%      { transform: translate(0, 0); }
+}
+.is-card-animated .tower-shake {
+  transform-box: view-box;
+  animation: tower-shake calc(8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes tower-cloud-l-drift {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(8px); }
+  100% { transform: translateX(0); }
+}
+@keyframes tower-cloud-r-drift {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-7px); }
+  100% { transform: translateX(0); }
+}
+.is-card-animated .tower-cloud-l {
+  transform-box: view-box;
+  animation: tower-cloud-l-drift calc(12s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .tower-cloud-r {
+  transform-box: view-box;
+  animation: tower-cloud-r-drift calc(13s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes tower-debris-fall {
+  0%   { transform: translate(0, 0) rotate(0deg);   opacity: 0; }
+  10%  { opacity: 0.7; }
+  100% { transform: translate(var(--debris-x, 0), 30px) rotate(120deg); opacity: 0; }
+}
+.is-card-animated .tower-debris {
+  transform-box: view-box;
+  animation: tower-debris-fall calc(6s * var(--anim-speed-mult, 1)) ease-in infinite;
+}
+.is-card-animated .tower-debris-1 { --debris-x: -4px; animation-delay:  0s; }
+.is-card-animated .tower-debris-2 { --debris-x:  6px; animation-delay: -1s; }
+.is-card-animated .tower-debris-3 { --debris-x: -6px; animation-delay: -2s; }
+.is-card-animated .tower-debris-4 { --debris-x:  5px; animation-delay: -3s; }
+.is-card-animated .tower-debris-5 { --debris-x: -3px; animation-delay: -4s; }
+.is-card-animated .tower-debris-6 { --debris-x:  4px; animation-delay: -5s; }
+@keyframes tower-spark-rise {
+  0%   { transform: translate(0, 0)     scale(1);   opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: translate(var(--spark-x, 0), -14px) scale(0.5); opacity: 0; }
+}
+.is-card-animated .tower-spark {
+  transform-box: view-box;
+  animation: tower-spark-rise calc(4.5s * var(--anim-speed-mult, 1)) ease-out infinite;
+}
+.is-card-animated .tower-spark-1 { --spark-x:  2px; animation-delay:  0s; }
+.is-card-animated .tower-spark-2 { --spark-x: -3px; animation-delay: -1.5s; }
+.is-card-animated .tower-spark-3 { --spark-x:  1px; animation-delay: -3s; }
+
+/* NEW: 主稲妻の後光（広いグロー、主稲妻と同位相） */
+@keyframes tower-lightning-glow {
+  0%, 30%, 100% { opacity: 0.10; }
+  32%           { opacity: 0.55; }
+  37%           { opacity: 0.40; }
+  39%           { opacity: 0.10; }
+}
+.is-card-animated .tower-lightning-glow {
+  animation: tower-lightning-glow calc(8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* NEW: 第二の稲妻（右上から、独立フラッシュ、位相を主稲妻からずらす） */
+@keyframes tower-lightning-2-flicker {
+  0%, 55%, 100% { opacity: 0.40; }
+  58%           { opacity: 1; filter: drop-shadow(0 0 1.5px rgba(185, 28, 28, 0.7)); }
+  60%           { opacity: 0.45; filter: none; }
+  63%           { opacity: 1; }
+  65%           { opacity: 0.40; }
+}
+.is-card-animated .tower-lightning-2 {
+  animation: tower-lightning-2-flicker calc(9s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* NEW: 相輪の宝珠（塔頂の朱、控えめ脈動） */
+@keyframes tower-finial-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.35); opacity: 0.75; }
+}
+.is-card-animated .tower-finial {
+  transform-box: view-box;
+  transform-origin: 50px 9px;
+  animation: tower-finial-pulse calc(3.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* NEW: 塔から落ちる人影（落下軌道、上から下へ） */
+@keyframes tower-figure-fall {
+  0%   { transform: translate(0, 0)     rotate(0deg);   opacity: 0; }
+  10%  { opacity: 0.85; }
+  100% { transform: translate(var(--fig-x, -8px), 22px) rotate(var(--fig-r, -25deg)); opacity: 0; }
+}
+.is-card-animated .tower-figure {
+  transform-box: view-box;
+  animation: tower-figure-fall calc(5.5s * var(--anim-speed-mult, 1)) ease-in infinite;
+}
+.is-card-animated .tower-figure-1 { --fig-x: -10px; --fig-r: -30deg; animation-delay:  0s; }
+.is-card-animated .tower-figure-2 { --fig-x:  10px; --fig-r:  30deg; animation-delay: -2.5s; }
+
+/* NEW: 炎の揺らぎ（塔の側面、左右で位相反転） */
+@keyframes tower-flame-flicker {
+  0%, 100% { transform: scale(1)    scaleY(1);    opacity: 0.85; }
+  33%      { transform: scale(1.08) scaleY(1.15); opacity: 1; }
+  66%      { transform: scale(0.96) scaleY(0.92); opacity: 0.75; }
+}
+.is-card-animated .tower-flame {
+  transform-box: view-box;
+  animation: tower-flame-flicker calc(1.2s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .tower-flame-l { transform-origin: 28px 78px; animation-delay:  0s; }
+.is-card-animated .tower-flame-r { transform-origin: 72px 78px; animation-delay: -0.6s; }
+
+/* 隠し：稲妻連発、塔の振動も強化、第二稲妻も加速、炎も激しく */
+.is-card-animated.card-major-16[data-hidden-active] .tower-lightning,
+.is-card-animated.card-major-16[data-hidden-active] .tower-lightning-glow {
+  animation-duration: calc(1.5s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-16[data-hidden-active] .tower-lightning-2 {
+  animation-duration: calc(1.8s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-16[data-hidden-active] .tower-shake {
+  animation-duration: calc(0.6s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-16[data-hidden-active] .tower-flame {
+  animation-duration: calc(0.5s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-16[data-hidden-active] .tower-figure {
+  animation-duration: calc(2s * var(--anim-speed-mult, 1));
+}
+
+/* =============================================================================
+   極 17 星 (The Star)：希望、浄化、静かな祈り
+   - 北斗七星 7 つが各位相でゆっくり明滅
+   - 中央朱の主星が脈動 + 4本の放射線が opacity 揺らぎ
+   - 流れ星が時折斜めに走る（15s 周期で 1 回）
+   - 夜空の柔らかなグローが脈動
+   - 隠し：長押しで全 7 星が同時に最大輝度 + 流れ星即発
+   ============================================================================= */
+@keyframes star-twinkle {
+  0%, 100% { opacity: 1;    transform: scale(1); }
+  50%      { opacity: 0.3;  transform: scale(0.7); }
+}
+.is-card-animated .star-twinkle {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: star-twinkle calc(8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* 七星の位置を上下分割版に更新（七星は上半分のジグザグに再配列） */
+.is-card-animated .star-twinkle-1 { transform-origin: 14px 14px; animation-delay:  0s; }
+.is-card-animated .star-twinkle-2 { transform-origin: 28px 10px; animation-delay: -1.1s; }
+.is-card-animated .star-twinkle-3 { transform-origin: 42px 14px; animation-delay: -2.3s; }
+.is-card-animated .star-twinkle-4 { transform-origin: 56px 22px; animation-delay: -3.4s; }
+.is-card-animated .star-twinkle-5 { transform-origin: 70px 22px; animation-delay: -4.6s; }
+.is-card-animated .star-twinkle-6 { transform-origin: 80px 30px; animation-delay: -5.7s; }
+.is-card-animated .star-twinkle-7 { transform-origin: 88px 38px; animation-delay: -6.9s; }
+@keyframes star-mainstar-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.25); opacity: 0.75; }
+}
+.is-card-animated .star-mainstar {
+  transform-box: view-box;
+  /* 上下分割版で主星は (50, 36) に移動 */
+  transform-origin: 50px 36px;
+  animation: star-mainstar-pulse calc(3.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* NEW: 女性の額の朱印（pulsing） */
+.is-card-animated .star-woman-mark {
+  transform-box: view-box;
+  transform-origin: 50px 59px;
+  animation: star-mainstar-pulse calc(3s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* NEW: 水瓶から注がれる水（opacity flow） */
+@keyframes star-water-flow {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 0.85; }
+}
+.is-card-animated .star-water-flow {
+  animation: star-water-flow calc(2.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* NEW: 池の波紋（女性に近い/遠い 2 層、位相違い） */
+@keyframes star-pond-ripple {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 0.55; }
+}
+.is-card-animated .star-pond-ripple {
+  animation: star-pond-ripple calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .star-pond-ripple-1 { animation-delay: 0s; }
+.is-card-animated .star-pond-ripple-2 { animation-delay: -2.5s; }
+@keyframes star-night-glow-pulse {
+  0%, 100% { opacity: 0.05; }
+  50%      { opacity: 0.14; }
+}
+.is-card-animated .star-night-glow {
+  animation: star-night-glow-pulse calc(8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* 流れ星：15s 周期で 1 回だけ斜めに走る。残り時間は不可視。 */
+@keyframes star-shooting-streak {
+  0%, 88%, 100% { transform: translate(0, 0); opacity: 0; }
+  90%           { transform: translate(0, 0); opacity: 1; }
+  98%           { transform: translate(70px, 70px); opacity: 0; }
+}
+.is-card-animated .star-shooting {
+  transform-box: view-box;
+  animation: star-shooting-streak calc(15s * var(--anim-speed-mult, 1)) ease-out infinite;
+}
+/* 隠し：全 7 星が同時最大輝度、流れ星連発 */
+.is-card-animated.card-major-17[data-hidden-active] .star-twinkle {
+  animation-delay: 0s !important;
+  animation-duration: calc(2.4s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-17[data-hidden-active] .star-shooting {
+  animation-duration: calc(2s * var(--anim-speed-mult, 1));
+}
+
+/* =============================================================================
+   極 18 月 (The Moon)：幻、不安、直感
+   - 月本体が満ち欠けのように scale 脈動
+   - 月光のグローが大きく脈動
+   - 雲が水平に流れる（下層 2 + 横切り 1）
+   - 池の波紋 2 層が opacity 振動
+   - 月明かりの朱印が脈動
+   - 隠し：長押しで雲が月を完全に覆う → 漏れ出る月光
+   ============================================================================= */
+@keyframes moon-disk-phase {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(0.93); opacity: 0.85; }
+}
+.is-card-animated .moon-disk {
+  transform-box: view-box;
+  /* 巨大化版で月の中心が (44, 40) 付近に移動 */
+  transform-origin: 44px 40px;
+  animation: moon-disk-phase calc(11s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* NEW: 月の塗り（disk 本体と同期、塗りが満ち欠けで濃淡） */
+@keyframes moon-disk-fill-pulse {
+  0%, 100% { opacity: 0.14; }
+  50%      { opacity: 0.20; }
+}
+.is-card-animated .moon-disk-fill {
+  animation: moon-disk-fill-pulse calc(11s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes moon-glow-pulse {
+  0%, 100% { opacity: 0.06; transform: scale(0.95); }
+  50%      { opacity: 0.18; transform: scale(1.08); }
+}
+.is-card-animated .moon-glow {
+  transform-box: view-box;
+  /* 巨大化版でグロー中心が (36, 40) に移動、半径も拡大 */
+  transform-origin: 36px 40px;
+  animation: moon-glow-pulse calc(7s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* NEW: 鳥居の御幣朱印（控えめ脈動、両脇で同期） */
+@keyframes moon-torii-seal-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.35); opacity: 0.75; }
+}
+.is-card-animated .moon-torii-seal {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: moon-torii-seal-pulse calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* NEW: 池に映る月の反射（薄い揺らぎ） */
+@keyframes moon-reflection-shimmer {
+  0%, 100% { opacity: 0.18; transform: translateY(0); }
+  50%      { opacity: 0.32; transform: translateY(0.4px); }
+}
+.is-card-animated .moon-reflection {
+  transform-box: view-box;
+  animation: moon-reflection-shimmer calc(4.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes moon-cloud-drift-a {
+  0%, 100% { transform: translateX(-4px); }
+  50%      { transform: translateX(6px); }
+}
+@keyframes moon-cloud-drift-b {
+  0%, 100% { transform: translateX(4px); }
+  50%      { transform: translateX(-5px); }
+}
+.is-card-animated .moon-cloud-1 {
+  transform-box: view-box;
+  animation: moon-cloud-drift-a calc(9s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .moon-cloud-2 {
+  transform-box: view-box;
+  animation: moon-cloud-drift-b calc(11s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes moon-cloud-cross {
+  0%, 35%, 100% { transform: translateX(0);   opacity: 0.45; }
+  60%           { transform: translateX(40px); opacity: 0.20; }
+  80%           { transform: translateX(60px); opacity: 0; }
+}
+.is-card-animated .moon-cloud-cross {
+  transform-box: view-box;
+  animation: moon-cloud-cross calc(16s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes moon-ripple-fade {
+  0%, 100% { opacity: 0.20; }
+  50%      { opacity: 0.55; }
+}
+.is-card-animated .moon-ripple {
+  animation: moon-ripple-fade calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .moon-ripple-1 { animation-delay: 0s; }
+.is-card-animated .moon-ripple-2 { animation-delay: -2s; }
+@keyframes moon-seal-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.4);  opacity: 0.7; }
+}
+.is-card-animated .moon-seal {
+  transform-box: view-box;
+  /* 巨大化版で月の朱印が (44, 40) に移動 */
+  transform-origin: 44px 40px;
+  animation: moon-seal-pulse calc(3s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* 隠し：通過雲が即座に月を覆う */
+.is-card-animated.card-major-18[data-hidden-active] .moon-cloud-cross {
+  animation-duration: calc(3s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-18[data-hidden-active] .moon-disk {
+  animation-duration: calc(4s * var(--anim-speed-mult, 1));
+}
+
+/* =============================================================================
+   極 19 太陽 (The Sun)：喜び、顕現、祝福
+   - 太陽本体が穏やかに鼓動
+   - 主光線（8方向）が順回転
+   - 副光線（8方向）が逆回転
+   - 朱の中心が強く脈動
+   - 太陽の放射グローが大きく脈動
+   - 黄金粒子 4 個が放射方向に浮上→消える
+   - 隠し：長押しで光線が一気に拡張・回転加速（太陽爆発）
+   ============================================================================= */
+/* 太陽中心が cx=50, cy=20（画面上部）に移動。全 transform-origin を更新。
+   シルエット脱却版：上下分割構図、太陽は上部の控えめ要素、向日葵が手前で主役級。 */
+@keyframes sun-disk-beat {
+  0%, 100% { transform: scale(1);    }
+  50%      { transform: scale(1.08); }
+}
+.is-card-animated .sun-disk {
+  transform-box: view-box;
+  transform-origin: 50px 20px;
+  animation: sun-disk-beat calc(3s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .sun-rays-a {
+  transform-box: view-box;
+  transform-origin: 50px 20px;
+  animation: wheel-rotate calc(12s * var(--anim-speed-mult, 1)) linear infinite;
+}
+.is-card-animated .sun-rays-b {
+  transform-box: view-box;
+  transform-origin: 50px 20px;
+  animation: wheel-rotate-rev calc(18s * var(--anim-speed-mult, 1)) linear infinite;
+}
+@keyframes sun-hub-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.6);  opacity: 0.75; }
+}
+.is-card-animated .sun-hub {
+  transform-box: view-box;
+  transform-origin: 50px 20px;
+  animation: sun-hub-pulse calc(2.2s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes sun-aureole-pulse {
+  0%, 100% { opacity: 0.12; transform: scale(0.95); }
+  50%      { opacity: 0.26; transform: scale(1.10); }
+}
+.is-card-animated .sun-aureole {
+  transform-box: view-box;
+  transform-origin: 50px 20px;
+  animation: sun-aureole-pulse calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* 太陽の遠い後光（最外）。薄く呼吸 */
+@keyframes sun-far-halo-pulse {
+  0%, 100% { opacity: 0.04; }
+  50%      { opacity: 0.10; }
+}
+.is-card-animated .sun-far-halo {
+  animation: sun-far-halo-pulse calc(7s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* 同心波動（2層）。外向きに opacity 揺らぎ */
+@keyframes sun-wave-expand {
+  0%, 100% { opacity: var(--wave-low, 0.10); transform: scale(0.94); }
+  50%      { opacity: var(--wave-high, 0.40); transform: scale(1.06); }
+}
+.is-card-animated .sun-wave {
+  transform-box: view-box;
+  transform-origin: 50px 20px;
+  animation: sun-wave-expand calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .sun-wave-1 { --wave-low: 0.22; --wave-high: 0.55; animation-delay:  0s; }
+.is-card-animated .sun-wave-2 { --wave-low: 0.12; --wave-high: 0.35; animation-delay: -1.5s; }
+
+/* 向日葵 3本。中央は主役級（r=12）、両脇は中型（r=4.5）。
+   全て同じ 3s 周期で呼吸し、太陽の鼓動と同期。 */
+@keyframes sun-sunflower-breathe {
+  0%, 100% { transform: scale(1);    }
+  50%      { transform: scale(1.10); }
+}
+.is-card-animated .sun-sunflower {
+  transform-box: view-box;
+  animation: sun-sunflower-breathe calc(3s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* 中央向日葵 (50, 74) — 主役、scale 振幅は太陽と同等 1.10 */
+.is-card-animated .sun-sunflower-2 { transform-origin: 50px 74px; animation-delay:  0s; }
+/* 両脇 (16, 82) (84, 82) — 中型、太陽鼓動と僅か位相ずれ */
+.is-card-animated .sun-sunflower-1 { transform-origin: 16px 82px; animation-delay: -0.6s; }
+.is-card-animated .sun-sunflower-3 { transform-origin: 84px 82px; animation-delay: -0.6s; }
+
+/* 向日葵の花心朱（sun-hub-pulse を流用、scale 1→1.6） */
+.is-card-animated .sun-sunflower-core {
+  transform-box: view-box;
+  animation: sun-hub-pulse calc(3s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .sun-sunflower-core-2 { transform-origin: 50px 74px; animation-delay:  0s; }
+.is-card-animated .sun-sunflower-core-1 { transform-origin: 16px 82px; animation-delay: -0.6s; }
+.is-card-animated .sun-sunflower-core-3 { transform-origin: 84px 82px; animation-delay: -0.6s; }
+
+/* 黄金粒子（風景ゾーン y=48〜56 から太陽 (50, 20) へ向けて上昇） */
+@keyframes sun-particle-rise {
+  0%   { transform: translate(0, 0) scale(1);   opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: translate(var(--p-x, 0), var(--p-y, -30px)) scale(0.4); opacity: 0; }
+}
+.is-card-animated .sun-particle {
+  transform-box: view-box;
+  animation: sun-particle-rise calc(4.5s * var(--anim-speed-mult, 1)) ease-out infinite;
+}
+/* 粒子の起点 (cx, cy) から太陽 (50, 20) への delta:
+   p1 (30, 55) → (50, 20): +20, -35
+   p2 (68, 56) → (50, 20): -18, -36
+   p3 (44, 48) → (50, 20):  +6, -28
+   p4 (58, 50) → (50, 20):  -8, -30 */
+.is-card-animated .sun-particle-1 { --p-x:  20px; --p-y: -35px; animation-delay:  0s; }
+.is-card-animated .sun-particle-2 { --p-x: -18px; --p-y: -36px; animation-delay: -1.1s; }
+.is-card-animated .sun-particle-3 { --p-x:   6px; --p-y: -28px; animation-delay: -2.2s; }
+.is-card-animated .sun-particle-4 { --p-x:  -8px; --p-y: -30px; animation-delay: -3.3s; }
+
+/* 隠し：光線急回転、太陽中心強脈動、向日葵急呼吸 */
+.is-card-animated.card-major-19[data-hidden-active] .sun-rays-a {
+  animation-duration: calc(2.5s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-19[data-hidden-active] .sun-rays-b {
+  animation-duration: calc(3.5s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-19[data-hidden-active] .sun-hub {
+  animation-duration: calc(0.7s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-19[data-hidden-active] .sun-sunflower,
+.is-card-animated.card-major-19[data-hidden-active] .sun-sunflower-core {
+  animation-duration: calc(0.9s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-19[data-hidden-active] .sun-wave {
+  animation-duration: calc(1.4s * var(--anim-speed-mult, 1));
+}
+
+/* =============================================================================
+   極 21 世界 (The World)：完成、統合、円環
+   - 蓮華八弁が順回転（14s）
+   - 中間点線円が同方向だが別速度（22s）
+   - 外円が逆回転（28s、最遅）
+   - 中央朱印が強脈動
+   - 4方位の唐草が順次脈動（循環）
+   - 4隅の朱印が時計回り順次脈動（達成のリズム）
+   - 隠し：長押しで全要素が高速同期収束（完成の極み）
+   ============================================================================= */
+/* NEW: 最外の薄い円（曼荼羅の境界）。world-aether で呼吸 */
+@keyframes world-aether-pulse {
+  0%, 100% { opacity: 0.06; }
+  50%      { opacity: 0.14; }
+}
+.is-card-animated .world-aether {
+  animation: world-aether-pulse calc(8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+.is-card-animated .world-petals {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+  animation: wheel-rotate calc(14s * var(--anim-speed-mult, 1)) linear infinite;
+}
+.is-card-animated .world-dotted {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+  animation: wheel-rotate calc(22s * var(--anim-speed-mult, 1)) linear infinite;
+}
+.is-card-animated .world-outer {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+  animation: wheel-rotate-rev calc(28s * var(--anim-speed-mult, 1)) linear infinite;
+}
+@keyframes world-center-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.45); opacity: 0.7; }
+}
+.is-card-animated .world-center {
+  transform-box: view-box;
+  /* 舞人の帯飾りに移動（旧 50,50 → 新 50,47） */
+  transform-origin: 50px 47px;
+  animation: world-center-pulse calc(2.8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* NEW: 舞う人物が静かに左右に揺れる（舞いの呼吸） */
+@keyframes world-dancer-sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50%      { transform: rotate(2deg); }
+}
+.is-card-animated .world-dancer {
+  transform-box: view-box;
+  /* 頭〜足の中央軸を支点に揺らぐ */
+  transform-origin: 50px 50px;
+  animation: world-dancer-sway calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes world-cardinal-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1);   }
+  50%      { opacity: 1.0; transform: scale(1.25); }
+}
+.is-card-animated .world-cardinal {
+  transform-box: view-box;
+  animation: world-cardinal-pulse calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .world-cardinal-n { transform-origin: 50px  8px; animation-delay:  0s; }
+.is-card-animated .world-cardinal-e { transform-origin: 91px 50px; animation-delay: -1s; }
+.is-card-animated .world-cardinal-s { transform-origin: 50px 92px; animation-delay: -2s; }
+.is-card-animated .world-cardinal-w { transform-origin:  9px 50px; animation-delay: -3s; }
+/* 四神は主役級サイズ（12-15 viewBox 単位）に拡大されたため、
+   旧 scale 1.6 だと中心に侵食する → 1.08 に縮小、opacity 振幅で「呼吸」を表現 */
+@keyframes world-corner-pulse {
+  0%, 100% { opacity: 0.70; transform: scale(1);    }
+  50%      { opacity: 1.0;  transform: scale(1.08); }
+}
+.is-card-animated .world-corner {
+  transform-box: view-box;
+  animation: world-corner-pulse calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .world-corner-1 { transform-origin: 14px 14px; animation-delay:  0s; }
+.is-card-animated .world-corner-2 { transform-origin: 86px 14px; animation-delay: -1s; }
+.is-card-animated .world-corner-3 { transform-origin: 86px 86px; animation-delay: -2s; }
+.is-card-animated .world-corner-4 { transform-origin: 14px 86px; animation-delay: -3s; }
+/* 隠し：全要素が同期収束（速度倍） */
+.is-card-animated.card-major-21[data-hidden-active] .world-petals,
+.is-card-animated.card-major-21[data-hidden-active] .world-dotted,
+.is-card-animated.card-major-21[data-hidden-active] .world-outer {
+  animation-duration: calc(3s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-21[data-hidden-active] .world-center {
+  animation-duration: calc(0.9s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-21[data-hidden-active] .world-corner,
+.is-card-animated.card-major-21[data-hidden-active] .world-cardinal {
+  animation-duration: calc(1.2s * var(--anim-speed-mult, 1));
+  animation-delay: 0s !important;
+}
+
+/* =============================================================================
+   貴（epic）コートカード 16 枚：人物（武将・姫）の個性別アニメ
+   各カード固有の動き。長押し隠し演出は data-hidden-active で発動。
+   時間帯/季節モジュレーションは継承（calc + filter）。
+   ============================================================================= */
+
+/* ------------------------ 共有キーフレーム ------------------------ */
+@keyframes court-flame-flicker {
+  0%, 100% { transform: scaleY(1)    scaleX(1);    opacity: 1; }
+  35%      { transform: scaleY(1.08) scaleX(0.96); opacity: 0.85; }
+  65%      { transform: scaleY(0.94) scaleX(1.04); opacity: 1; }
+}
+@keyframes court-ember-rise {
+  0%   { transform: translateY(0)     scale(1);   opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: translateY(-12px) scale(0.5); opacity: 0; }
+}
+@keyframes court-gaze-pulse {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(1.8); opacity: 0.7; }
+}
+@keyframes court-dash-flow {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -14; }
+}
+@keyframes court-dash-flow-strong {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -18; }
+}
+@keyframes court-rider-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3.5px); }
+}
+@keyframes court-charge-bob {
+  0%, 100% { transform: translateY(0); }
+  25%      { transform: translateY(-4.5px); }
+  50%      { transform: translateY(1.5px); }
+  75%      { transform: translateY(-3.5px); }
+}
+@keyframes court-torch-flame-flicker {
+  0%, 100% { transform: scale(1)    rotate(-7deg); }
+  50%      { transform: scale(1.22) rotate(7deg); }
+}
+@keyframes court-spark-trail-fly {
+  0%   { transform: translate(0, 0)         scale(1);   opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: translate(-26px, 10px)  scale(0.3); opacity: 0; }
+}
+@keyframes court-hair-sway {
+  0%, 100% { transform: translateX(0)     rotate(0deg); }
+  50%      { transform: translateX(2.2px) rotate(6deg); }
+}
+@keyframes court-glow-pulse {
+  0%, 100% { opacity: 0.55; filter: drop-shadow(0 0 0 transparent); }
+  50%      { opacity: 1;    filter: drop-shadow(0 0 2.5px currentColor); }
+}
+@keyframes court-pommel-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.75); opacity: 0.7; }
+}
+@keyframes court-crest-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.45); opacity: 0.7; }
+}
+@keyframes king-flame-flicker {
+  0%, 100% { transform: translateY(0)    scaleY(1);    opacity: 1; }
+  35%      { transform: translateY(-2px) scaleY(1.20); opacity: 0.85; }
+  65%      { transform: translateY(1.2px) scaleY(0.86); opacity: 1; }
+}
+@keyframes court-water-ripple {
+  0%, 100% { opacity: 0.40; transform: scaleX(1); }
+  50%      { opacity: 0.90; transform: scaleX(1.08); }
+}
+@keyframes court-blade-dash {
+  from { stroke-dashoffset: 0;  }
+  to   { stroke-dashoffset: -10; }
+}
+
+/* ============================================================================
+   杖のコート 4 枚
+   ============================================================================ */
+
+/* --- wands-11 Page of Wands：見習いが火を見つめる、火が燃え立つ --- */
+.is-card-animated .court-flame-outer {
+  transform-box: view-box;
+  transform-origin: 68px 58px;
+  animation: court-flame-flicker calc(2.8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .court-flame-mid {
+  transform-box: view-box;
+  transform-origin: 68px 58px;
+  animation: court-flame-flicker calc(2.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+  animation-delay: -0.4s;
+}
+.is-card-animated .court-flame-inner {
+  transform-box: view-box;
+  transform-origin: 68px 58px;
+  animation: court-flame-flicker calc(2s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+  animation-delay: -0.8s;
+}
+.is-card-animated .court-ember {
+  transform-box: view-box;
+  animation: court-ember-rise calc(4s * var(--anim-speed-mult, 1)) ease-out infinite;
+}
+.is-card-animated .court-ember-1 { animation-delay:  0s; }
+.is-card-animated .court-ember-2 { animation-delay: -1s; }
+.is-card-animated .court-ember-3 { animation-delay: -2s; }
+.is-card-animated .court-ember-4 { animation-delay: -3s; }
+.is-card-animated .court-gaze {
+  transform-box: view-box;
+  transform-origin: 28px 58px;
+  animation: court-gaze-pulse calc(2.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* hidden：火が燃え上がる（速度倍 + 火の粉急上昇） */
+.is-card-animated.card-wands-11[data-hidden-active] .court-flame-outer,
+.is-card-animated.card-wands-11[data-hidden-active] .court-flame-mid,
+.is-card-animated.card-wands-11[data-hidden-active] .court-flame-inner {
+  animation-duration: calc(1s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-wands-11[data-hidden-active] .court-ember {
+  animation-duration: calc(1.3s * var(--anim-speed-mult, 1));
+}
+
+/* --- wands-12 Knight of Wands：松明を掲げて駆ける、火の粉が後方に流れる --- */
+.is-card-animated .court-speedline {
+  animation: court-dash-flow calc(0.8s * var(--anim-speed-mult, 1)) linear infinite;
+}
+.is-card-animated .court-rider-bob {
+  transform-box: view-box;
+  animation: court-rider-bob calc(0.7s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .court-torch-flame {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: court-torch-flame-flicker calc(0.6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .court-spark-trail {
+  transform-box: view-box;
+  animation: court-spark-trail-fly calc(2.5s * var(--anim-speed-mult, 1)) ease-out infinite;
+}
+.is-card-animated .court-spark-trail-1 { animation-delay:  0s; }
+.is-card-animated .court-spark-trail-2 { animation-delay: -0.6s; }
+.is-card-animated .court-spark-trail-3 { animation-delay: -1.2s; }
+.is-card-animated .court-spark-trail-4 { animation-delay: -1.8s; }
+/* hidden：全力疾走（馬・松明・火の粉が高速） */
+.is-card-animated.card-wands-12[data-hidden-active] .court-rider-bob {
+  animation-duration: calc(0.3s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-wands-12[data-hidden-active] .court-spark-trail {
+  animation-duration: calc(0.9s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-wands-12[data-hidden-active] .court-speedline {
+  animation-duration: calc(0.3s * var(--anim-speed-mult, 1));
+}
+
+/* --- wands-13 Queen of Wands：髪が揺れる、松明が揺らぐ、扇が脈動 --- */
+.is-card-animated.card-wands-13 .court-hair-sway {
+  transform-box: view-box;
+  transform-origin: 50px 25px;
+  animation: court-hair-sway calc(4.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .court-fan-glow {
+  animation: court-glow-pulse calc(3.2s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* hidden：松明が大きく燃え上がる、髪が大きく揺れる */
+.is-card-animated.card-wands-13[data-hidden-active] .court-torch-flame {
+  animation-duration: calc(0.3s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-wands-13[data-hidden-active] .court-hair-sway {
+  animation-duration: calc(1.5s * var(--anim-speed-mult, 1));
+}
+
+/* --- wands-14 King of Wands：大きな火が雄壮、家紋脈動、刀の柄頭 --- */
+.is-card-animated .king-flame-outer {
+  transform-box: view-box;
+  transform-origin: 80px 60px;
+  animation: king-flame-flicker calc(3.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .king-flame-inner {
+  transform-box: view-box;
+  transform-origin: 80px 60px;
+  animation: king-flame-flicker calc(2.6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+  animation-delay: -0.5s;
+}
+.is-card-animated .court-crest {
+  transform-box: view-box;
+  transform-origin: 50px 42px;
+  animation: court-crest-pulse calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .court-pommel {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: court-pommel-pulse calc(2.6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* hidden：火柱大噴出 */
+.is-card-animated.card-wands-14[data-hidden-active] .king-flame-outer,
+.is-card-animated.card-wands-14[data-hidden-active] .king-flame-inner {
+  animation-duration: calc(1s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-wands-14[data-hidden-active] .court-ember {
+  animation-duration: calc(1.5s * var(--anim-speed-mult, 1));
+}
+
+/* ============================================================================
+   聖杯のコート 4 枚
+   ============================================================================ */
+
+/* --- cups-11 Page of Cups：杯の中の鳥、水面、雫 --- */
+.is-card-animated .court-water-1 {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: court-water-ripple calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .court-water-2 {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: court-water-ripple calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+  animation-delay: -1.5s;
+}
+.is-card-animated .court-water-3 {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: court-water-ripple calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+  animation-delay: -2.8s;
+}
+@keyframes page-bird-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+.is-card-animated .page-bird {
+  transform-box: view-box;
+  animation: page-bird-bob calc(3s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .page-bird-head {
+  transform-box: view-box;
+  transform-origin: 50px 6px;
+  animation: court-gaze-pulse calc(2.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes page-drip-fall {
+  0%   { transform: translateY(-3px); opacity: 0; }
+  15%  { opacity: 1; }
+  100% { transform: translateY(18px); opacity: 0; }
+}
+.is-card-animated .page-drip {
+  transform-box: view-box;
+  animation: page-drip-fall calc(3.5s * var(--anim-speed-mult, 1)) ease-in infinite;
+}
+/* hidden：鳥がはばたく（rotate） */
+@keyframes cups-page-bird-flap {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(16deg) translateY(-4px); }
+  50%      { transform: rotate(0deg)  translateY(-1px); }
+  75%      { transform: rotate(-16deg) translateY(-4px); }
+}
+.is-card-animated.card-cups-11[data-hidden-active] .page-bird {
+  transform-origin: 50px 14px;
+  animation: cups-page-bird-flap calc(0.8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* --- cups-12 Knight of Cups：馬がゆったり、雫の流れ --- */
+@keyframes knight-cups-drop-flow {
+  0%, 100% { opacity: 0.25; transform: translateY(0); }
+  50%      { opacity: 0.90; transform: translateY(3.5px); }
+}
+.is-card-animated .knight-drop-trail {
+  transform-box: view-box;
+  animation: knight-cups-drop-flow calc(3.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .knight-drop-trail-seal {
+  transform-box: view-box;
+  transform-origin: 58px 56px;
+  animation: court-pommel-pulse calc(2.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* hidden：馬が一歩前進＋雫の流れ加速 */
+.is-card-animated.card-cups-12[data-hidden-active] .court-rider-bob {
+  animation-duration: calc(0.4s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-cups-12[data-hidden-active] .knight-drop-trail {
+  animation-duration: calc(1s * var(--anim-speed-mult, 1));
+}
+
+/* --- cups-13 Queen of Cups：満月、長髪、水面、感情の朱 --- */
+@keyframes queen-cups-moon-pulse {
+  0%, 100% { opacity: 1;    transform: scale(1); }
+  50%      { opacity: 0.55; transform: scale(1.12); }
+}
+.is-card-animated .queen-moon {
+  transform-box: view-box;
+  transform-origin: 76px 22px;
+  animation: queen-cups-moon-pulse calc(6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated.card-cups-13 .court-hair-sway {
+  transform-box: view-box;
+  transform-origin: 44px 30px;
+  animation: court-hair-sway calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .queen-heart {
+  transform-box: view-box;
+  transform-origin: 52px 56px;
+  animation: court-pommel-pulse calc(2.2s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* hidden：月が満ち欠け強く、水面が大波 */
+.is-card-animated.card-cups-13[data-hidden-active] .queen-moon {
+  animation-duration: calc(2s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-cups-13[data-hidden-active] .court-water-1,
+.is-card-animated.card-cups-13[data-hidden-active] .court-water-2,
+.is-card-animated.card-cups-13[data-hidden-active] .court-water-3 {
+  animation-duration: calc(1.2s * var(--anim-speed-mult, 1));
+}
+
+/* --- cups-14 King of Cups：波紋、魚、笏、杯の魂 --- */
+@keyframes king-cups-ripple {
+  0%, 100% { opacity: 0.15; transform: scaleX(0.96); }
+  50%      { opacity: 0.85; transform: scaleX(1.04); }
+}
+.is-card-animated .king-ripple {
+  animation: king-cups-ripple calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .king-ripple-1 { animation-delay:  0s; }
+.is-card-animated .king-ripple-2 { animation-delay: -1.2s; }
+.is-card-animated .king-ripple-3 { animation-delay: -2.4s; }
+.is-card-animated .king-ripple-4 { animation-delay: -3.6s; }
+.is-card-animated .king-ripple-5 { animation-delay: -0.7s; }
+.is-card-animated .king-ripple-6 { animation-delay: -1.9s; }
+@keyframes king-cups-fish-swim {
+  0%   { transform: translateX(0)     rotate(0deg); }
+  50%  { transform: translateX(-12px) rotate(-9deg); }
+  100% { transform: translateX(0)     rotate(0deg); }
+}
+@keyframes king-cups-fish-swim-rev {
+  0%   { transform: translateX(0)    rotate(0deg); }
+  50%  { transform: translateX(14px) rotate(10deg); }
+  100% { transform: translateX(0)    rotate(0deg); }
+}
+.is-card-animated .king-fish-swim {
+  transform-box: view-box;
+  transform-origin: 78px 32px;
+  animation: king-cups-fish-swim calc(8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .king-fish-swim-rev {
+  transform-box: view-box;
+  transform-origin: 16px 78px;
+  animation: king-cups-fish-swim-rev calc(10s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .king-cups-crest,
+.is-card-animated .king-cups-eboshi-jewel,
+.is-card-animated .king-cups-shaku-jewel {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: court-crest-pulse calc(3.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .king-cups-eboshi-jewel { animation-delay: -1s; }
+.is-card-animated .king-cups-shaku-jewel  { animation-delay: -2s; }
+.is-card-animated .king-cups-obi {
+  transform-box: view-box;
+  transform-origin: 50px 78px;
+  animation: court-pommel-pulse calc(3s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes king-cups-water-wave {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(2px); }
+}
+.is-card-animated .king-cups-water {
+  transform-box: view-box;
+  animation: king-cups-water-wave calc(2.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .king-cups-soul {
+  transform-box: view-box;
+  transform-origin: 79px 76px;
+  animation: court-pommel-pulse calc(2s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes king-cups-foot-wave {
+  0%, 100% { transform: translateX(0);   opacity: 0.25; }
+  50%      { transform: translateX(5px); opacity: 0.75; }
+}
+.is-card-animated .king-cups-foot-water {
+  transform-box: view-box;
+  animation: king-cups-foot-wave calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* hidden：大波 + 魚の急速泳ぎ */
+.is-card-animated.card-cups-14[data-hidden-active] .king-ripple {
+  animation-duration: calc(1.5s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-cups-14[data-hidden-active] .king-fish-swim,
+.is-card-animated.card-cups-14[data-hidden-active] .king-fish-swim-rev {
+  animation-duration: calc(2.5s * var(--anim-speed-mult, 1));
+}
+
+/* ============================================================================
+   剣のコート 4 枚
+   ============================================================================ */
+
+/* --- swords-11 Page of Swords：足元の風、刀身の光 --- */
+.is-card-animated .court-windline {
+  animation: court-dash-flow calc(1.2s * var(--anim-speed-mult, 1)) linear infinite;
+}
+@keyframes court-blade-shine-flow {
+  from { stroke-dashoffset: 0;  opacity: 0.5; }
+  50%  { opacity: 0.85; }
+  to   { stroke-dashoffset: -10; opacity: 0.5; }
+}
+.is-card-animated .court-blade-shine {
+  animation: court-blade-shine-flow calc(2s * var(--anim-speed-mult, 1)) linear infinite;
+}
+/* hidden：風が強くなる + 刀身が強く光る */
+.is-card-animated.card-swords-11[data-hidden-active] .court-windline {
+  animation-duration: calc(0.4s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-swords-11[data-hidden-active] .court-blade-shine {
+  animation-duration: calc(0.8s * var(--anim-speed-mult, 1));
+  opacity: 0.9 !important;
+}
+
+/* --- swords-12 Knight of Swords：突進・風・振り上げ刀 --- */
+.is-card-animated .court-windline-strong {
+  animation: court-dash-flow-strong calc(0.7s * var(--anim-speed-mult, 1)) linear infinite;
+}
+.is-card-animated .court-charge-bob {
+  transform-box: view-box;
+  animation: court-charge-bob calc(0.6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes knight-swords-blade-gleam {
+  0%, 100% { opacity: 1;   filter: drop-shadow(0 0 0 transparent); }
+  50%      { opacity: 1;   filter: drop-shadow(0 0 3px rgba(255,255,255,0.95)); }
+}
+.is-card-animated .knight-swords-blade {
+  animation: knight-swords-blade-gleam calc(2.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* hidden：全力疾走 + 刀振り下ろし（一瞬） */
+@keyframes knight-swords-strike {
+  0%   { transform: rotate(0deg); }
+  40%  { transform: rotate(8deg); }
+  60%  { transform: rotate(-12deg); }
+  100% { transform: rotate(0deg); }
+}
+.is-card-animated.card-swords-12[data-hidden-active] .court-charge-bob {
+  animation-duration: calc(0.25s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-swords-12[data-hidden-active] .court-windline-strong {
+  animation-duration: calc(0.3s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-swords-12[data-hidden-active] .knight-swords-blade {
+  transform-box: view-box;
+  transform-origin: 64px 20px;
+  animation: knight-swords-strike calc(2.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* --- swords-13 Queen of Swords：雲、髪、刀の閃き --- */
+@keyframes queen-swords-cloud-drift {
+  0%, 100% { opacity: 0.20; transform: translateX(0); }
+  50%      { opacity: 0.70; transform: translateX(6px); }
+}
+.is-card-animated .queen-swords-cloud {
+  transform-box: view-box;
+  animation: queen-swords-cloud-drift calc(6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .queen-swords-cloud-1 { animation-delay:  0s; }
+.is-card-animated .queen-swords-cloud-2 { animation-delay: -2s; }
+.is-card-animated .queen-swords-cloud-3 { animation-delay: -4s; }
+.is-card-animated.card-swords-13 .court-hair-sway {
+  transform-box: view-box;
+  transform-origin: 50px 34px;
+  animation: court-hair-sway calc(4.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes queen-swords-blade-flash {
+  0%, 88%, 100% { opacity: 0.85; filter: none; }
+  93%           { opacity: 1;    filter: drop-shadow(0 0 4px rgba(255,255,255,1)); }
+  97%           { opacity: 1;    filter: drop-shadow(0 0 1px rgba(255,255,255,0.6)); }
+}
+.is-card-animated .queen-swords-blade {
+  animation: queen-swords-blade-flash calc(7s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* hidden：風が強くなる、刀がきらめく */
+.is-card-animated.card-swords-13[data-hidden-active] .queen-swords-cloud {
+  animation-duration: calc(2s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-swords-13[data-hidden-active] .queen-swords-blade {
+  animation-duration: calc(2s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-swords-13[data-hidden-active] .court-hair-sway {
+  animation-duration: calc(1.5s * var(--anim-speed-mult, 1));
+}
+
+/* --- swords-14 King of Swords：刀身が光る、髭、家紋 --- */
+@keyframes king-swords-shine-flow {
+  from { stroke-dashoffset: 0;   opacity: 0.5; }
+  50%  { opacity: 0.85; }
+  to   { stroke-dashoffset: -14; opacity: 0.5; }
+}
+.is-card-animated .king-swords-shine {
+  animation: king-swords-shine-flow calc(2.5s * var(--anim-speed-mult, 1)) linear infinite;
+}
+.is-card-animated .king-swords-blade {
+  animation: knight-swords-blade-gleam calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .king-swords-crest,
+.is-card-animated .king-swords-eboshi {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: court-crest-pulse calc(3.6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .king-swords-eboshi { animation-delay: -1.2s; }
+.is-card-animated .king-swords-obi {
+  transform-box: view-box;
+  transform-origin: 50px 76px;
+  animation: court-pommel-pulse calc(3s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* hidden：刀身全体が強く光る（power up） */
+.is-card-animated.card-swords-14[data-hidden-active] .king-swords-shine {
+  animation-duration: calc(0.8s * var(--anim-speed-mult, 1));
+  opacity: 0.95 !important;
+}
+.is-card-animated.card-swords-14[data-hidden-active] .king-swords-blade {
+  animation-duration: calc(1.2s * var(--anim-speed-mult, 1));
+}
+
+/* ============================================================================
+   金貨のコート 4 枚
+   ============================================================================ */
+
+/* --- pentacles-11 Page of Pentacles：小判を見つめる、草 --- */
+@keyframes page-pent-grass-sway {
+  0%, 100% { transform: rotate(-5deg); }
+  50%      { transform: rotate(12deg); }
+}
+.is-card-animated .page-pent-grass {
+  transform-box: view-box;
+  animation: page-pent-grass-sway calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .page-pent-grass-1 { transform-origin: 14px 92px; animation-delay:  0s; }
+.is-card-animated .page-pent-grass-2 { transform-origin: 26px 92px; animation-delay: -1s; }
+.is-card-animated .page-pent-grass-3 { transform-origin: 74px 92px; animation-delay: -2s; }
+.is-card-animated .page-pent-grass-4 { transform-origin: 86px 92px; animation-delay: -3s; }
+@keyframes page-pent-koban-glow {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 0 transparent); }
+  50%      { opacity: 1; filter: drop-shadow(0 0 4px rgba(212, 160, 23, 0.90)); }
+}
+.is-card-animated .page-pent-koban {
+  animation: page-pent-koban-glow calc(3.6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* hidden：小判が黄金に輝く（filter 強化） */
+.is-card-animated.card-pentacles-11[data-hidden-active] .page-pent-koban {
+  animation-duration: calc(1s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-pentacles-11[data-hidden-active] .court-gaze {
+  animation-duration: calc(0.8s * var(--anim-speed-mult, 1));
+}
+
+/* --- pentacles-12 Knight of Pentacles：馬が呼吸、小判輝き --- */
+@keyframes knight-pent-breathe {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-2.5px); }
+}
+.is-card-animated .knight-pent-breathe {
+  transform-box: view-box;
+  animation: knight-pent-breathe calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* hidden：馬が一歩前進 + 小判が輝く */
+.is-card-animated.card-pentacles-12[data-hidden-active] .knight-pent-breathe {
+  animation-duration: calc(1.4s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-pentacles-12[data-hidden-active] .page-pent-koban {
+  animation-duration: calc(1.2s * var(--anim-speed-mult, 1));
+}
+
+/* --- pentacles-13 Queen of Pentacles：稲穂、髪、果実 --- */
+@keyframes queen-pent-rice-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50%      { transform: rotate(7deg); }
+}
+.is-card-animated .queen-pent-rice {
+  transform-box: view-box;
+  transform-origin: 50px 30px;
+  animation: queen-pent-rice-sway calc(7s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated.card-pentacles-13 .court-hair-sway {
+  transform-box: view-box;
+  transform-origin: 50px 36px;
+  animation: court-hair-sway calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .queen-pent-obi {
+  transform-box: view-box;
+  transform-origin: 50px 58px;
+  animation: court-pommel-pulse calc(2.8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .queen-pent-fruit {
+  transform-box: view-box;
+  transform-origin: 22px 86px;
+  animation: court-crest-pulse calc(3.2s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* hidden：庭園が花開く（果実が大きく動く） */
+@keyframes queen-pent-bloom {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(2.5);  opacity: 1; }
+}
+.is-card-animated.card-pentacles-13[data-hidden-active] .queen-pent-fruit {
+  animation: queen-pent-bloom calc(1.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated.card-pentacles-13[data-hidden-active] .queen-pent-rice {
+  animation-duration: calc(2s * var(--anim-speed-mult, 1));
+}
+
+/* --- pentacles-14 King of Pentacles：家紋輻射、髭、帯飾り --- */
+.is-card-animated .king-pent-crest {
+  transform-box: view-box;
+  transform-origin: 50px 38px;
+  animation: court-crest-pulse calc(3.6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes king-pent-ray-pulse {
+  0%, 100% { opacity: 0.15; transform: scaleY(0.7); }
+  50%      { opacity: 0.95; transform: scaleY(1.4); }
+}
+.is-card-animated .king-pent-ray {
+  transform-box: view-box;
+  transform-origin: 50px 38px;
+  animation: king-pent-ray-pulse calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* 8方向を順次明滅（時計回り） */
+.is-card-animated .king-pent-ray-1 { animation-delay:  0s; }
+.is-card-animated .king-pent-ray-2 { animation-delay: -0.5s; }
+.is-card-animated .king-pent-ray-3 { animation-delay: -1s; }
+.is-card-animated .king-pent-ray-4 { animation-delay: -1.5s; }
+.is-card-animated .king-pent-ray-5 { animation-delay: -2s; }
+.is-card-animated .king-pent-ray-6 { animation-delay: -2.5s; }
+.is-card-animated .king-pent-ray-7 { animation-delay: -3s; }
+.is-card-animated .king-pent-ray-8 { animation-delay: -3.5s; }
+.is-card-animated .court-pent-obi {
+  transform-box: view-box;
+  transform-origin: 50px 80px;
+  animation: court-pommel-pulse calc(2.6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+/* hidden：家紋輻射が一斉に最大輝度（豊作の極み） */
+.is-card-animated.card-pentacles-14[data-hidden-active] .king-pent-ray {
+  animation-duration: calc(1.2s * var(--anim-speed-mult, 1));
+  animation-delay: 0s !important;
+}
+.is-card-animated.card-pentacles-14[data-hidden-active] .king-pent-crest {
+  animation-duration: calc(1s * var(--anim-speed-mult, 1));
+}
+
+/* =============================================================================
+   稀（rare）大アルカナ 14 枚：カードごと固有アニメ
+   強度：貴より控えめだが明確に動く（線幅 1-2px、回転 ±5-8°、サイクル 3-7s）
+   Phase 2b の教訓を反映：最初から仕様レベル振幅で実装
+   ============================================================================= */
+
+/* ------------------------ 共有キーフレーム ------------------------ */
+@keyframes rare-eye-alt-on {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.55); opacity: 0.8; }
+}
+@keyframes rare-eye-alt-off {
+  0%, 100% { transform: scale(1.55); opacity: 0.8; }
+  50%      { transform: scale(1);    opacity: 1; }
+}
+@keyframes rare-pulse-soft {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.35); opacity: 0.75; }
+}
+@keyframes rare-pulse-strong {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.65); opacity: 0.7; }
+}
+@keyframes rare-pendulum {
+  0%, 100% { transform: rotate(-6deg); }
+  50%      { transform: rotate(6deg); }
+}
+@keyframes rare-sway-small {
+  0%, 100% { transform: rotate(-3deg); }
+  50%      { transform: rotate(3deg); }
+}
+@keyframes rare-rotate-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes rare-rotate-rev-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+@keyframes rare-glow-fade {
+  0%, 100% { opacity: 0.30; }
+  50%      { opacity: 0.95; }
+}
+
+/* ============================================================================
+   major-01 The Magician（魔術師）：陰陽
+   - 外円とS字が同方向にゆっくり回転（15s）
+   - 陽の眼（朱）と陰の眼（墨）が交互に明滅（3.5s 位相反転）
+   - Hidden：両眼同時最大 + 回転加速
+   ============================================================================ */
+.is-card-animated .magician-ring {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+  animation: rare-rotate-slow calc(15s * var(--anim-speed-mult, 1)) linear infinite;
+}
+.is-card-animated .magician-eye-yang {
+  transform-box: view-box;
+  transform-origin: 50px 34px;
+  animation: rare-eye-alt-on calc(3.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .magician-eye-yin {
+  transform-box: view-box;
+  transform-origin: 50px 66px;
+  animation: rare-eye-alt-off calc(3.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated.card-major-01[data-hidden-active] .magician-ring {
+  animation-duration: calc(3s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-01[data-hidden-active] .magician-eye-yang,
+.is-card-animated.card-major-01[data-hidden-active] .magician-eye-yin {
+  animation: rare-pulse-strong calc(0.8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* ============================================================================
+   major-02 The High Priestess（女教皇）：御簾の竹簾
+   - 6本の竹が時差で rotate ±5° （風の通過）
+   - 房（朱）が振り子 rotate ±10°
+   - Hidden：風が強くなる（竹大揺れ + 房大振り）
+   ============================================================================ */
+@keyframes priestess-bamboo-sway {
+  0%, 100% { transform: rotate(-4deg); }
+  50%      { transform: rotate(4deg); }
+}
+.is-card-animated .priestess-bamboo {
+  transform-box: view-box;
+  animation: priestess-bamboo-sway calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .priestess-bamboo-1 { transform-origin: 30px 22px; animation-delay:  0s; }
+.is-card-animated .priestess-bamboo-2 { transform-origin: 38px 22px; animation-delay: -0.8s; }
+.is-card-animated .priestess-bamboo-3 { transform-origin: 46px 22px; animation-delay: -1.6s; }
+.is-card-animated .priestess-bamboo-4 { transform-origin: 54px 22px; animation-delay: -2.4s; }
+.is-card-animated .priestess-bamboo-5 { transform-origin: 62px 22px; animation-delay: -3.2s; }
+.is-card-animated .priestess-bamboo-6 { transform-origin: 70px 22px; animation-delay: -4s; }
+@keyframes priestess-tassel-swing {
+  0%, 100% { transform: rotate(-10deg); }
+  50%      { transform: rotate(10deg); }
+}
+.is-card-animated .priestess-tassel {
+  transform-box: view-box;
+  transform-origin: 50px 76px;
+  animation: priestess-tassel-swing calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated.card-major-02[data-hidden-active] .priestess-bamboo {
+  animation-duration: calc(1.4s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-02[data-hidden-active] .priestess-tassel {
+  animation-duration: calc(1.2s * var(--anim-speed-mult, 1));
+}
+
+/* ============================================================================
+   major-03 The Empress（女帝）：牡丹
+   - 5弁が同期で開閉（中心を軸に scale 1↔1.06）
+   - 花心（朱）が脈動
+   - Hidden：花が大きく開閉
+   ============================================================================ */
+@keyframes empress-bloom {
+  0%, 100% { transform: scale(1);    }
+  50%      { transform: scale(1.06); }
+}
+.is-card-animated .empress-petals {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+  animation: empress-bloom calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .empress-core {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+  animation: rare-pulse-soft calc(3s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated.card-major-03[data-hidden-active] .empress-petals {
+  animation-duration: calc(1.6s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-03[data-hidden-active] .empress-core {
+  animation-duration: calc(0.9s * var(--anim-speed-mult, 1));
+}
+
+/* ============================================================================
+   major-04 The Emperor（皇帝）：天守閣
+   - 高座の朱の御紋が威厳脈動
+   - 各層の窓6つが順次明滅（夜の城の灯）
+   - Hidden：全窓同時に最大輝度（謁見の時）
+   ============================================================================ */
+.is-card-animated .emperor-crest {
+  transform-box: view-box;
+  transform-origin: 50px 66px;
+  animation: rare-pulse-soft calc(3.6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes emperor-window-flicker {
+  0%, 100% { fill: transparent; opacity: 1; }
+  50%      { fill: rgba(212, 160, 23, 0.55); opacity: 1; }
+}
+.is-card-animated .emperor-window {
+  animation: emperor-window-flicker calc(6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .emperor-window-1 { animation-delay:  0s; }
+.is-card-animated .emperor-window-2 { animation-delay: -1s; }
+.is-card-animated .emperor-window-3 { animation-delay: -2s; }
+.is-card-animated .emperor-window-4 { animation-delay: -3s; }
+.is-card-animated .emperor-window-5 { animation-delay: -4s; }
+.is-card-animated .emperor-window-6 { animation-delay: -5s; }
+.is-card-animated.card-major-04[data-hidden-active] .emperor-window {
+  animation-duration: calc(1.5s * var(--anim-speed-mult, 1));
+  animation-delay: 0s !important;
+}
+.is-card-animated.card-major-04[data-hidden-active] .emperor-crest {
+  animation-duration: calc(1s * var(--anim-speed-mult, 1));
+}
+
+/* ============================================================================
+   major-05 The Hierophant（教皇）：五重塔と修行者
+   - 相輪（朱）が脈動
+   - 3修行者が時差で頭を上下（合掌の呼吸）
+   - Hidden：3人同期で頭を上げる（覚醒）
+   ============================================================================ */
+.is-card-animated .hierophant-finial {
+  transform-box: view-box;
+  transform-origin: 50px 8px;
+  animation: rare-pulse-soft calc(3.2s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes hierophant-monk-bow {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-1.5px); }
+}
+.is-card-animated .hierophant-monk {
+  transform-box: view-box;
+  animation: hierophant-monk-bow calc(4.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .hierophant-monk-1 { animation-delay:  0s; }
+.is-card-animated .hierophant-monk-2 { animation-delay: -1.5s; }
+.is-card-animated .hierophant-monk-3 { animation-delay: -3s; }
+.is-card-animated.card-major-05[data-hidden-active] .hierophant-monk {
+  animation-duration: calc(1.8s * var(--anim-speed-mult, 1));
+  animation-delay: 0s !important;
+}
+.is-card-animated.card-major-05[data-hidden-active] .hierophant-finial {
+  animation-duration: calc(1s * var(--anim-speed-mult, 1));
+}
+
+/* ============================================================================
+   major-06 The Lovers（恋人）：太陽・月・桜・水面
+   - 太陽の光線（8方向）が回転
+   - 太陽の中央朱が脈動
+   - 月が脈動
+   - 桜花が呼吸
+   - 散る花弁3枚が時差で落下
+   - Hidden：桜吹雪（花弁高速 + 桜花大開花）
+   ============================================================================ */
+.is-card-animated .lovers-sun-rays {
+  transform-box: view-box;
+  transform-origin: 20px 16px;
+  animation: rare-rotate-slow calc(14s * var(--anim-speed-mult, 1)) linear infinite;
+}
+.is-card-animated .lovers-sun-core {
+  transform-box: view-box;
+  transform-origin: 20px 16px;
+  animation: rare-pulse-soft calc(2.8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .lovers-moon {
+  transform-box: view-box;
+  transform-origin: 80px 16px;
+  animation: rare-pulse-soft calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes lovers-sakura-breathe {
+  0%, 100% { transform: scale(1);   }
+  50%      { transform: scale(1.18); }
+}
+.is-card-animated .lovers-sakura {
+  transform-box: view-box;
+  transform-origin: 50px 48px;
+  animation: lovers-sakura-breathe calc(4.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes lovers-petal-fall {
+  0%   { transform: translateY(-3px); opacity: 0; }
+  15%  { opacity: 0.8; }
+  100% { transform: translateY(22px); opacity: 0; }
+}
+.is-card-animated .lovers-petal {
+  transform-box: view-box;
+  animation: lovers-petal-fall calc(6s * var(--anim-speed-mult, 1)) ease-in infinite;
+}
+.is-card-animated .lovers-petal-1 { animation-delay:  0s; }
+.is-card-animated .lovers-petal-2 { animation-delay: -2s; }
+.is-card-animated .lovers-petal-3 { animation-delay: -4s; }
+.is-card-animated.card-major-06[data-hidden-active] .lovers-petal {
+  animation-duration: calc(2s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-06[data-hidden-active] .lovers-sakura {
+  animation-duration: calc(1.4s * var(--anim-speed-mult, 1));
+}
+
+/* ============================================================================
+   major-07 The Chariot（戦車）：屋形と車輪
+   - 2車輪が同方向に回転（前進感）
+   - 御紋（朱）が威厳脈動
+   - Hidden：車輪急加速（突進）
+   ============================================================================ */
+.is-card-animated .chariot-wheel-l {
+  transform-box: view-box;
+  transform-origin: 32px 72px;
+  animation: rare-rotate-slow calc(6s * var(--anim-speed-mult, 1)) linear infinite;
+}
+.is-card-animated .chariot-wheel-r {
+  transform-box: view-box;
+  transform-origin: 68px 72px;
+  animation: rare-rotate-slow calc(6s * var(--anim-speed-mult, 1)) linear infinite;
+}
+.is-card-animated .chariot-crest {
+  transform-box: view-box;
+  transform-origin: 50px 45px;
+  animation: rare-pulse-soft calc(3.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated.card-major-07[data-hidden-active] .chariot-wheel-l,
+.is-card-animated.card-major-07[data-hidden-active] .chariot-wheel-r {
+  animation-duration: calc(1.2s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-07[data-hidden-active] .chariot-crest {
+  animation-duration: calc(0.9s * var(--anim-speed-mult, 1));
+}
+
+/* ============================================================================
+   major-08 Strength（力）：狛犬
+   - 顔（楕円）が呼吸 scale
+   - たてがみ7本が同期で伸縮
+   - 眼2つが交互に脈動
+   - 鼻先（朱）が強脈動
+   - Hidden：顔大呼吸 + たてがみ獰猛
+   ============================================================================ */
+.is-card-animated .strength-face {
+  transform-box: view-box;
+  transform-origin: 50px 54px;
+  animation: empress-bloom calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes strength-mane-radiate {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.10); opacity: 0.85; }
+}
+.is-card-animated .strength-mane {
+  transform-box: view-box;
+  transform-origin: 50px 54px;
+  animation: strength-mane-radiate calc(4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .strength-eye-l {
+  transform-box: view-box;
+  transform-origin: 43px 50px;
+  animation: rare-eye-alt-on calc(3.2s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .strength-eye-r {
+  transform-box: view-box;
+  transform-origin: 57px 50px;
+  animation: rare-eye-alt-off calc(3.2s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .strength-nose {
+  transform-box: view-box;
+  transform-origin: 50px 60px;
+  animation: rare-pulse-strong calc(2.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated.card-major-08[data-hidden-active] .strength-face,
+.is-card-animated.card-major-08[data-hidden-active] .strength-mane {
+  animation-duration: calc(1.4s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-08[data-hidden-active] .strength-eye-l,
+.is-card-animated.card-major-08[data-hidden-active] .strength-eye-r {
+  animation: rare-pulse-strong calc(0.8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* ============================================================================
+   major-09 The Hermit（隠者）：提灯
+   - 提灯本体が紐の付け根 (50, 20) を軸に振り子 ±7°
+   - 灯（朱）が脈動
+   - Hidden：灯が強く輝く + 提灯大揺れ
+   ============================================================================ */
+@keyframes hermit-lantern-swing {
+  0%, 100% { transform: rotate(-7deg); }
+  50%      { transform: rotate(7deg); }
+}
+.is-card-animated .hermit-lantern {
+  transform-box: view-box;
+  transform-origin: 50px 20px;
+  animation: hermit-lantern-swing calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes hermit-flame-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; filter: drop-shadow(0 0 0 transparent); }
+  50%      { transform: scale(1.35); opacity: 0.85; filter: drop-shadow(0 0 2px rgba(168, 52, 31, 0.6)); }
+}
+.is-card-animated .hermit-flame {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+  animation: hermit-flame-pulse calc(2.8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated.card-major-09[data-hidden-active] .hermit-lantern {
+  animation: hermit-lantern-swing calc(1.4s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+  /* Hidden では振幅増 */
+  animation-name: hermit-lantern-swing-hidden;
+}
+@keyframes hermit-lantern-swing-hidden {
+  0%, 100% { transform: rotate(-14deg); }
+  50%      { transform: rotate(14deg); }
+}
+.is-card-animated.card-major-09[data-hidden-active] .hermit-flame {
+  animation-duration: calc(0.9s * var(--anim-speed-mult, 1));
+}
+
+/* ============================================================================
+   major-11 Justice（正義）：天秤
+   - 横棒＋両皿が左右にゆっくり揺れる（rotate ±4° 中央軸）
+   - 中央朱（支点）が脈動
+   - Hidden：大きく揺れて止まる傾向
+   ============================================================================ */
+@keyframes justice-balance-swing {
+  0%, 100% { transform: rotate(-4deg); }
+  50%      { transform: rotate(4deg); }
+}
+.is-card-animated .justice-balance {
+  transform-box: view-box;
+  transform-origin: 50px 32px;
+  animation: justice-balance-swing calc(5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .justice-pivot {
+  transform-box: view-box;
+  transform-origin: 50px 32px;
+  animation: rare-pulse-soft calc(2.8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated.card-major-11[data-hidden-active] .justice-balance {
+  animation-name: justice-balance-swing-hidden;
+  animation-duration: calc(1.8s * var(--anim-speed-mult, 1));
+}
+@keyframes justice-balance-swing-hidden {
+  0%, 100% { transform: rotate(-9deg); }
+  50%      { transform: rotate(9deg); }
+}
+.is-card-animated.card-major-11[data-hidden-active] .justice-pivot {
+  animation-duration: calc(0.9s * var(--anim-speed-mult, 1));
+}
+
+/* ============================================================================
+   major-12 The Hanged Man（吊るされた男）：縄に吊られて
+   - 人物（逆三角）が縄の付け根 (50, 22) を軸に微妙に揺れる ±3°
+   - 雫（朱）が落下ループ
+   - Hidden：人物が大きく揺れる（揺さぶり）
+   ============================================================================ */
+@keyframes hanged-sway-pendulum {
+  0%, 100% { transform: rotate(-3deg); }
+  50%      { transform: rotate(3deg); }
+}
+.is-card-animated .hanged-sway {
+  transform-box: view-box;
+  transform-origin: 50px 22px;
+  animation: hanged-sway-pendulum calc(6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes hanged-drop-fall {
+  0%   { transform: translateY(0);   opacity: 1; }
+  60%  { transform: translateY(6px); opacity: 1; }
+  80%  { transform: translateY(8px); opacity: 0; }
+  100% { transform: translateY(0);   opacity: 0; }
+}
+.is-card-animated .hanged-drop {
+  transform-box: view-box;
+  animation: hanged-drop-fall calc(4s * var(--anim-speed-mult, 1)) ease-in infinite;
+}
+.is-card-animated.card-major-12[data-hidden-active] .hanged-sway {
+  animation-name: hanged-sway-pendulum-hidden;
+  animation-duration: calc(2s * var(--anim-speed-mult, 1));
+}
+@keyframes hanged-sway-pendulum-hidden {
+  0%, 100% { transform: rotate(-8deg); }
+  50%      { transform: rotate(8deg); }
+}
+.is-card-animated.card-major-12[data-hidden-active] .hanged-drop {
+  animation-duration: calc(1.2s * var(--anim-speed-mult, 1));
+}
+
+/* ============================================================================
+   major-14 Temperance（節制）：2つの盃と水の流れ
+   - 上の盃が僅かに揺れる（注ぐ動作、rotate ±5°）
+   - 水の流れが opacity 揺らぎ
+   - 雫（朱）が流れに沿って移動（上→下）
+   - Hidden：水の流れ加速（注ぎが激しく）
+   ============================================================================ */
+@keyframes temperance-pour {
+  0%, 100% { transform: rotate(-3deg); }
+  50%      { transform: rotate(5deg); }
+}
+.is-card-animated .temperance-cup-top {
+  transform-box: view-box;
+  transform-origin: 31px 28px;
+  animation: temperance-pour calc(5.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes temperance-stream-flow {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+.is-card-animated .temperance-stream {
+  animation: temperance-stream-flow calc(2.8s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes temperance-drop-flow {
+  0%   { transform: translate(-12px, -3px); opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: translate(16px, 6px); opacity: 0; }
+}
+.is-card-animated .temperance-drop {
+  transform-box: view-box;
+  animation: temperance-drop-flow calc(3s * var(--anim-speed-mult, 1)) ease-in infinite;
+}
+.is-card-animated.card-major-14[data-hidden-active] .temperance-stream,
+.is-card-animated.card-major-14[data-hidden-active] .temperance-cup-top {
+  animation-duration: calc(1.4s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-14[data-hidden-active] .temperance-drop {
+  animation-duration: calc(1s * var(--anim-speed-mult, 1));
+}
+
+/* ============================================================================
+   major-15 The Devil（悪魔）：鬼面
+   - 火の点8個が時差で明滅（地獄の燃え）
+   - 両眼（朱）が交互に強脈動（凶悪な光）
+   - Hidden：全火点 + 両眼同時に最大強発光
+   ============================================================================ */
+@keyframes devil-ember-flicker {
+  0%, 100% { opacity: 0.35; transform: scale(0.85); }
+  50%      { opacity: 1;    transform: scale(1.25); }
+}
+.is-card-animated .devil-ember {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: devil-ember-flicker calc(2.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .devil-ember-1 { transform-origin: 10px 20px; animation-delay:  0s; }
+.is-card-animated .devil-ember-2 { transform-origin: 90px 22px; animation-delay: -0.3s; }
+.is-card-animated .devil-ember-3 { transform-origin: 6px 40px;  animation-delay: -0.7s; }
+.is-card-animated .devil-ember-4 { transform-origin: 94px 44px; animation-delay: -1s; }
+.is-card-animated .devil-ember-5 { transform-origin: 14px 70px; animation-delay: -1.4s; }
+.is-card-animated .devil-ember-6 { transform-origin: 86px 74px; animation-delay: -1.7s; }
+.is-card-animated .devil-ember-7 { transform-origin: 20px 88px; animation-delay: -2s; }
+.is-card-animated .devil-ember-8 { transform-origin: 80px 88px; animation-delay: -2.3s; }
+.is-card-animated .devil-eye-l {
+  transform-box: view-box;
+  transform-origin: 40px 52px;
+  animation: rare-eye-alt-on calc(2.6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .devil-eye-r {
+  transform-box: view-box;
+  transform-origin: 60px 52px;
+  animation: rare-eye-alt-off calc(2.6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated.card-major-15[data-hidden-active] .devil-ember {
+  animation-duration: calc(0.6s * var(--anim-speed-mult, 1));
+  animation-delay: 0s !important;
+}
+.is-card-animated.card-major-15[data-hidden-active] .devil-eye-l,
+.is-card-animated.card-major-15[data-hidden-active] .devil-eye-r {
+  animation: rare-pulse-strong calc(0.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+
+/* ============================================================================
+   major-20 Judgement（審判）：鳥居・法輪・修行者・光スパーク
+   - 光スパーク5本＋中央球が時差で明滅（呼ぶ光）
+   - 法輪が ゆっくり回転（覚醒のリズム）
+   - 法輪中央朱が脈動
+   - 3合掌の修行者が時差で頭を上下（呼ばれている）
+   - Hidden：全要素覚醒（スパーク高速、法輪急速回転、修行者同期）
+   ============================================================================ */
+.is-card-animated .judgement-spark {
+  animation: rare-glow-fade calc(3.2s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .judgement-spark-1 { animation-delay:  0s; }
+.is-card-animated .judgement-spark-2 { animation-delay: -0.6s; }
+.is-card-animated .judgement-spark-3 { animation-delay: -1.2s; }
+.is-card-animated .judgement-spark-4 { animation-delay: -1.8s; }
+.is-card-animated .judgement-spark-5 { animation-delay: -2.4s; }
+.is-card-animated .judgement-spark-core {
+  transform-box: view-box;
+  transform-origin: 50px 8px;
+  animation: rare-pulse-soft calc(3s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .judgement-wheel {
+  transform-box: view-box;
+  transform-origin: 50px 44px;
+  animation: rare-rotate-slow calc(13s * var(--anim-speed-mult, 1)) linear infinite;
+}
+.is-card-animated .judgement-wheel-core {
+  transform-box: view-box;
+  transform-origin: 50px 44px;
+  animation: rare-pulse-soft calc(2.6s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+@keyframes judgement-monk-rise {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-2px); }
+}
+.is-card-animated .judgement-monk {
+  transform-box: view-box;
+  animation: judgement-monk-rise calc(4.5s * var(--anim-speed-mult, 1)) ease-in-out infinite;
+}
+.is-card-animated .judgement-monk-1 { animation-delay:  0s; }
+.is-card-animated .judgement-monk-2 { animation-delay: -1.5s; }
+.is-card-animated .judgement-monk-3 { animation-delay: -3s; }
+.is-card-animated.card-major-20[data-hidden-active] .judgement-spark {
+  animation-duration: calc(1s * var(--anim-speed-mult, 1));
+  animation-delay: 0s !important;
+}
+.is-card-animated.card-major-20[data-hidden-active] .judgement-wheel {
+  animation-duration: calc(3s * var(--anim-speed-mult, 1));
+}
+.is-card-animated.card-major-20[data-hidden-active] .judgement-monk {
+  animation-duration: calc(1.5s * var(--anim-speed-mult, 1));
+  animation-delay: 0s !important;
+}
+
+/* =============================================================================
+   Pre-Ritual：レア度別のタメ演出（フリップ前の予兆）
+   - common: スキップ（pre-ritual ステージに入らない）
+   - rare 1500ms：藍色グロー
+   - epic 3000ms：朱色グロー + 振動 + 背景朱色
+   - legendary 5500ms：暗転 + 金色強光 + 強振動 + 背景金色 + 亀甲四隅から侵入
+   ============================================================================= */
+
+/* 選ばれた札のグロー（rarity 別） */
+.pre-ritual-chosen-rare {
+  animation: rarity-glow-rare 1500ms ease-in-out forwards;
+}
+.pre-ritual-chosen-epic {
+  animation:
+    rarity-glow-epic 3000ms ease-in-out forwards,
+    rarity-vibrate-epic 100ms linear 20;
+}
+.pre-ritual-chosen-legendary {
+  animation:
+    rarity-glow-legendary 7000ms ease-in-out forwards,
+    rarity-vibrate-legendary 80ms linear 25;
+}
+.pre-ritual-other {
+  animation: pre-ritual-other-fade 600ms ease-out forwards;
+}
+
+@keyframes rarity-glow-rare {
+  0%   { box-shadow: 0 0 0 0 rgba(30, 58, 138, 0); }
+  25%  { box-shadow: 0 0 20px 4px rgba(30, 58, 138, 0.60); }
+  85%  { box-shadow: 0 0 24px 5px rgba(30, 58, 138, 0.65); }
+  100% { box-shadow: 0 0 32px 7px rgba(30, 58, 138, 0.85); }
+}
+@keyframes rarity-glow-epic {
+  0%   { box-shadow: 0 0 0 0 rgba(185, 28, 28, 0); }
+  20%  { box-shadow: 0 0 40px 6px rgba(185, 28, 28, 0.70); }
+  90%  { box-shadow: 0 0 46px 8px rgba(185, 28, 28, 0.80); }
+  100% { box-shadow: 0 0 56px 10px rgba(185, 28, 28, 0.95); }
+}
+@keyframes rarity-glow-legendary {
+  0%   { box-shadow: 0 0 0 0 rgba(212, 160, 23, 0); }
+  10%  { box-shadow: 0 0 50px 6px rgba(212, 160, 23, 0.80); }
+  50%  { box-shadow:
+           0 0 80px 12px rgba(212, 160, 23, 1.0),
+           0 0 120px 20px rgba(255, 255, 255, 0.35); }
+  100% { box-shadow:
+           0 0 90px 14px rgba(212, 160, 23, 1.0),
+           0 0 140px 24px rgba(255, 255, 255, 0.45); }
+}
+
+/* 振動（epic は ±2px、legendary は ±3px） */
+@keyframes rarity-vibrate-epic {
+  0%, 100% { transform: translate(0, 0); }
+  20%      { transform: translate(-2px, 1px); }
+  40%      { transform: translate(2px, -1px); }
+  60%      { transform: translate(-1px, -2px); }
+  80%      { transform: translate(2px, 2px); }
+}
+@keyframes rarity-vibrate-legendary {
+  0%, 100% { transform: translate(0, 0); }
+  20%      { transform: translate(-3px, 2px); }
+  40%      { transform: translate(3px, -2px); }
+  60%      { transform: translate(-2px, -3px); }
+  80%      { transform: translate(3px, 3px); }
+}
+
+/* 選ばれなかった札は薄く沈む */
+@keyframes pre-ritual-other-fade {
+  0%   { opacity: 1; }
+  100% { opacity: 0.25; }
+}
+
+/* 背景の rarity 色染め */
+.pre-ritual-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.pre-ritual-bg-epic {
+  animation: background-tint-epic 3000ms ease-in-out forwards;
+}
+.pre-ritual-bg-legendary {
+  animation: background-tint-legendary 7000ms ease-in-out forwards;
+}
+@keyframes background-tint-epic {
+  0%   { background: rgba(185, 28, 28, 0); }
+  25%  { background: rgba(185, 28, 28, 0.10); }
+  90%  { background: rgba(185, 28, 28, 0.08); }
+  100% { background: rgba(185, 28, 28, 0); }
+}
+@keyframes background-tint-legendary {
+  0%   { background: rgba(212, 160, 23, 0); }
+  20%  { background: rgba(212, 160, 23, 0.16); }
+  85%  { background: rgba(212, 160, 23, 0.12); }
+  100% { background: rgba(212, 160, 23, 0); }
+}
+
+/* 一瞬の暗転（legendary 開始 0-0.3s） */
+.pre-ritual-darken {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  z-index: 4;
+  pointer-events: none;
+  animation: screen-darken 7000ms ease-out forwards;
+}
+@keyframes screen-darken {
+  0%   { background: rgba(0, 0, 0, 0); }
+  2%   { background: rgba(0, 0, 0, 0.55); }
+  5%   { background: rgba(0, 0, 0, 0.55); }
+  9%   { background: rgba(0, 0, 0, 0); }
+  100% { background: rgba(0, 0, 0, 0); }
+}
+
+/* 亀甲文様が四隅から侵入し、中央で消える（legendary） */
+.pre-ritual-kikko-corner {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  opacity: 0;
+  z-index: 5;
+  pointer-events: none;
+  animation: kikko-invasion 1500ms 1500ms ease-in-out forwards;
+}
+.pre-ritual-kikko-tl { top: 4%;     left: 4%;   --kx:  130px; --ky:  80px; }
+.pre-ritual-kikko-tr { top: 4%;     right: 4%;  --kx: -130px; --ky:  80px; }
+.pre-ritual-kikko-bl { bottom: 12%; left: 4%;   --kx:  130px; --ky: -80px; }
+.pre-ritual-kikko-br { bottom: 12%; right: 4%;  --kx: -130px; --ky: -80px; }
+@keyframes kikko-invasion {
+  0%   { opacity: 0; transform: translate(0, 0) scale(1) rotate(0deg); }
+  25%  { opacity: 0.85; transform: translate(0, 0) scale(1) rotate(20deg); }
+  70%  { opacity: 0.70; transform: translate(calc(var(--kx) * 0.7), calc(var(--ky) * 0.7)) scale(0.7) rotate(60deg); }
+  100% { opacity: 0; transform: translate(var(--kx), var(--ky)) scale(0.3) rotate(120deg); }
+}
+
+/* prefers-reduced-motion 時：すべての pre-ritual アニメを停止 */
+@media (prefers-reduced-motion: reduce) {
+  .pre-ritual-chosen-rare,
+  .pre-ritual-chosen-epic,
+  .pre-ritual-chosen-legendary,
+  .pre-ritual-other,
+  .pre-ritual-bg-epic,
+  .pre-ritual-bg-legendary,
+  .pre-ritual-darken,
+  .pre-ritual-kikko-corner {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .pre-ritual-darken,
+  .pre-ritual-kikko-corner {
+    display: none !important;
+  }
+}
+
+/* =============================================================================
+   ホーム上部のミニバナー：連続日数、お帰り、節気
+   ============================================================================= */
+
+.home-mini-banners {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px 0;
+}
+
+/* 「🔥 7日連続 / 最長 12日」：データとして淡々と */
+.streak-banner {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  letter-spacing: 0.06em;
+  font-weight: 300;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+.streak-banner-sep {
+  margin: 0 8px;
+  opacity: 0.40;
+}
+.streak-banner-longest {
+  opacity: 0.75;
+}
+
+/* 「お帰りなさい。今日は気持ちを新たに 🌸」：途切れた次回起動時のみ */
+.comeback-banner {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  letter-spacing: 0.10em;
+  font-weight: 300;
+  font-family: var(--font-serif), serif;
+  font-style: italic;
+  text-align: center;
+  max-width: 280px;
+}
+
+/* 「本日は『立春』」：季節色でアクセント */
+.sekki-banner {
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  font-family: var(--font-serif), serif;
+  font-weight: 400;
+}
+.sekki-banner-prefix {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--muted-foreground);
+  margin-right: 4px;
+  font-weight: 300;
+}
+.sekki-banner-name {
+  /* color は season クラスで指定 */
+}
+.sekki-spring  .sekki-banner-name { color: #d97e9a; text-shadow: 0 0 8px rgba(217, 126, 154, 0.30); }
+.sekki-summer  .sekki-banner-name { color: #5ba07c; text-shadow: 0 0 8px rgba(91, 160, 124, 0.30); }
+.sekki-autumn  .sekki-banner-name { color: #c97a3e; text-shadow: 0 0 8px rgba(201, 122, 62, 0.35); }
+.sekki-winter  .sekki-banner-name { color: #6b8aa8; text-shadow: 0 0 8px rgba(107, 138, 168, 0.30); }
+
+/* =============================================================================
+   レア度漢字表示（カード下、解釈文の上）
+   フリップ完了後に fade in（500ms）。色は rarity-symbol-{rarity} を継承。
+   ============================================================================= */
+
+.chosen-rarity-kanji {
+  margin-top: 12px;
+  text-align: center;
+  opacity: 1;       /* 静的状態（is-ritual なし）では表示済み */
+}
+.chosen-rarity-kanji-char {
+  font-family: var(--font-serif), serif;
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  line-height: 1.0;
+  display: inline-block;
+  /* color は親の rarity-symbol-{rarity} から継承 */
+}
+.chosen-rarity-kanji-reading {
+  font-family: var(--font-serif), serif;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--muted-foreground);
+  font-weight: 300;
+}
+/* common: 墨色シャドウで紙の上の墨書感 */
+.rarity-common .chosen-rarity-kanji-char {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.10);
+}
+/* rare: 藍色の淡いハロー */
+.rarity-rare .chosen-rarity-kanji-char {
+  text-shadow:
+    0 0 6px rgba(30, 58, 138, 0.30),
+    0 1px 2px rgba(0, 0, 0, 0.10);
+}
+/* epic: 朱色のハロー */
+.rarity-epic .chosen-rarity-kanji-char {
+  text-shadow:
+    0 0 8px rgba(185, 28, 28, 0.40),
+    0 1px 2px rgba(0, 0, 0, 0.10);
+}
+/* legendary: 強い金色グロー（控えめに、gold-flow 文脈と整合） */
+.rarity-legendary .chosen-rarity-kanji-char {
+  text-shadow:
+    0 0 8px rgba(212, 160, 23, 0.65),
+    0 0 22px rgba(212, 160, 23, 0.35),
+    0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* is-ritual 時はフリップ完了直後（flip end 2950ms + 150ms 余白 = 3100ms）から fade in */
+.is-ritual .chosen-rarity-kanji {
+  opacity: 0;
+  animation: r-rarity-kanji 500ms 3100ms ease-out forwards;
+}
+@keyframes r-rarity-kanji {
+  0%   { opacity: 0; transform: scale(0.92) translateY(6px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-ritual .chosen-rarity-kanji {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* =============================================================================
+   Phase 7：新発見演出（5050ms 以降、初収録時のみ）
+   ============================================================================= */
+
+/* Problem 2：画面上部に position: fixed で固定（カードと干渉しない位置）。
+   半透明黒の帯背景、金色文字、立体感のある text-shadow。 */
+.new-discovery-text {
+  position: fixed;
+  top: 80px;                              /* ノッチ / status bar を避ける */
+  left: 50%;
+  /* 中央寄せは translateX(-50%)、translateY は keyframe で上下動 */
+  transform: translateX(-50%) translateY(-10px);
+  padding: 16px 32px;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 12px;
+  font-family: var(--font-serif), serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.30em;
+  color: #d4a017;
+  text-shadow:
+    0 0 6px rgba(212, 160, 23, 0.85),
+    0 0 18px rgba(212, 160, 23, 0.50),
+    0 2px 6px rgba(0, 0, 0, 0.7);
+  z-index: 100;                           /* カード（z-index ≤ 50）より確実に上 */
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+}
+/* Problem 1：合計 6.6s に延長（fade in 0.8s + 静的 5s + fade out 0.8s）。
+   !important で specificity 競合を物理的に防ぐ。 */
+.is-ritual .new-discovery-text {
+  animation: r-new-discovery 6600ms 5550ms ease-in-out forwards !important;
+}
+@keyframes r-new-discovery {
+  /* 6600ms total：
+     0-12% (0-792ms)    fade in
+     12-88% (792-5808ms) 静的表示（5016ms ≈ 5 秒の余裕）
+     88-100% (5808-6600ms) fade out */
+  0%   { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  12%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+  88%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+}
+
+.collection-counter-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 6px 12px 7px;
+  border-radius: 4px;
+  background: var(--card);
+  border: 1px solid var(--accent);
+  box-shadow:
+    0 0 8px rgba(184, 148, 31, 0.30),
+    0 2px 6px var(--shadow);
+  z-index: 13;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+.is-ritual .collection-counter-badge {
+  /* badge slide が 5550ms 開始に伴い、カウンターは少し後の 5650ms 開始 */
+  animation: r-counter-slide 500ms 5650ms ease-out forwards;
+}
+@keyframes r-counter-slide {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.collection-counter-label {
+  font-family: var(--font-serif), serif;
+  font-size: 9px;
+  letter-spacing: 0.30em;
+  color: var(--muted-foreground);
+  font-weight: 300;
+}
+.collection-counter-numbers {
+  font-family: var(--font-cormorant), serif;
+  font-size: 15px;
+  color: var(--foreground);
+  font-weight: 400;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* reduce-motion 時は新発見演出も停止し、最終状態をそのまま見せる */
+@media (prefers-reduced-motion: reduce) {
+  .new-discovery-text,
+  .collection-counter-badge {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* prefers-reduced-motion 時：装飾アニメと gold-flow とカード固有アニメをすべて停止。
+   .is-card-animated 配下の全 animation を一括 none に。
+   filter は色味モジュレーションのみで動きはないので残す。 */
+@media (prefers-reduced-motion: reduce) {
+  .rarity-legendary .card-washi-texture {
+    animation: none !important;
+    background-position: 0% 50% !important;
+  }
+  .is-card-animated,
+  .is-card-animated * {
+    animation: none !important;
+  }
+  /* 一部要素は scale(0) や translate で「消えている」状態が静止初期値となるため、
+     reduced-motion 時には強制的に元のシンボル位置/サイズに戻す */
+  .is-card-animated .fool-petal,
+  .is-card-animated .death-petal,
+  .is-card-animated .tower-debris,
+  .is-card-animated .tower-spark,
+  .is-card-animated .sun-particle,
+  .is-card-animated .star-shooting,
+  .is-card-animated .moon-cloud-cross {
+    transform: none !important;
+    opacity: 0.5 !important;
+  }
+}
+
+/* =============================================================================
+   季節背景：subtle だが確実に動いている粒子
+   ============================================================================= */
+
+:root {
+  /* 季節粒子の色：CSS 変数で light/dark を切り替え */
+  --seasonal-spring: rgba(245, 197, 197, 0.62);   /* 桜：薄い桃色（くすんだ朱色寄り） */
+  --seasonal-summer: rgba(255, 226, 130, 0.60);
+  --seasonal-autumn: rgba(212, 134, 73, 0.60);
+  --seasonal-winter: rgba(248, 248, 248, 0.75);
+
+  /* 伏せ札の朱色発光（呼吸と同期）。light/dark で色相を切り替え。 */
+  --fan-glow-low: rgba(168, 52, 31, 0.30);
+  --fan-glow-high: rgba(168, 52, 31, 0.55);
+
+  /* レア度別キーカラー（墨 / 藍 / 朱 / 金）。light テーマ。 */
+  --rarity-common-color: #1a1a1a;
+  --rarity-common-border: rgba(26, 26, 26, 0.30);
+  --rarity-common-bg-top: #fffcf7;
+  --rarity-common-bg-mid: #fffcf7;
+  --rarity-common-bg-end: rgba(237, 232, 222, 0.55);
+
+  --rarity-rare-color: #1e3a8a;
+  --rarity-rare-border: rgba(30, 58, 138, 0.55);
+  --rarity-rare-bg-top: #f3f6fb;
+  --rarity-rare-bg-mid: #e9eef6;
+  --rarity-rare-bg-end: #d8e2ee;
+
+  --rarity-epic-color: #b91c1c;
+  --rarity-epic-border: rgba(185, 28, 28, 0.55);
+  --rarity-epic-bg-top: #fef5f3;
+  --rarity-epic-bg-mid: #fbe5e1;
+  --rarity-epic-bg-end: #f7d3cd;
+
+  --rarity-legendary-color: #d4a017;
+  --rarity-legendary-border: #d4a017;
+  --rarity-legendary-bg-1: #fef9e7;
+  --rarity-legendary-bg-2: #f9e9c1;
+  --rarity-legendary-bg-3: #fef9e7;
+}
+.dark {
+  --seasonal-spring: rgba(232, 200, 165, 0.55);   /* dark：金色寄り（夜の月光） */
+  --seasonal-summer: rgba(255, 220, 130, 0.50);
+  --seasonal-autumn: rgba(212, 145, 90, 0.55);
+  --seasonal-winter: rgba(232, 232, 232, 0.65);
+
+  --fan-glow-low: rgba(201, 85, 62, 0.30);
+  --fan-glow-high: rgba(201, 85, 62, 0.55);
+
+  /* dark テーマでは色相を保ちつつ明度を上げる（背景が暗いので視認性確保） */
+  --rarity-common-color: #e8e2d6;
+  --rarity-common-border: rgba(232, 226, 214, 0.35);
+  --rarity-common-bg-top: #252220;
+  --rarity-common-bg-mid: #252220;
+  --rarity-common-bg-end: rgba(26, 22, 20, 0.55);
+
+  --rarity-rare-color: #8da4c2;
+  --rarity-rare-border: rgba(141, 164, 194, 0.55);
+  --rarity-rare-bg-top: #1f2630;
+  --rarity-rare-bg-mid: #1c2230;
+  --rarity-rare-bg-end: #181d27;
+
+  --rarity-epic-color: #d9897e;
+  --rarity-epic-border: rgba(217, 137, 126, 0.55);
+  --rarity-epic-bg-top: #2a1c1a;
+  --rarity-epic-bg-mid: #281816;
+  --rarity-epic-bg-end: #221513;
+
+  --rarity-legendary-color: #e8c060;
+  --rarity-legendary-border: #d4a017;
+  --rarity-legendary-bg-1: #3a2f10;
+  --rarity-legendary-bg-2: #4a3e1e;
+  --rarity-legendary-bg-3: #3a2f10;
+}
+
+.seasonal-background {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* z-index: 30 — 画面コンテンツ（.washi-texture > * で z-index: 1 が自動付与される）
+     より明確に上、かつ BottomNav (z-index 12) や DebugOverlay より上、
+     ただし Drawer (z-index 50)・儀式オーバーレイ（z-index 100）より下。
+     pointer-events: none なので操作は阻害しない。
+     2026-05-28: タブ切替時のみ粒子が見える「一瞬表示バグ」修正のため 1 → 30 に変更。 */
+  z-index: 30;
+}
+.washi-texture > .seasonal-background {
+  /* レガシー：もしどこかで子として再利用された場合のフォールバック */
+  z-index: 0;
+}
+
+/* 蛍：夏夜のみ。柔らかい黄色のグロー、ふわっと点滅 */
+.seasonal-firefly {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f8e070;
+  box-shadow: 0 0 10px #f8e070, 0 0 18px rgba(248, 224, 112, 0.6);
+  opacity: 0.2;
+  animation: firefly-blink 4s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+@keyframes firefly-blink {
+  0%, 100% { opacity: 0.1; transform: translate(0, 0); }
+  20%      { opacity: 0.9; transform: translate(4px, -6px); }
+  50%      { opacity: 0.3; transform: translate(-3px, 4px); }
+  80%      { opacity: 0.8; transform: translate(2px, -3px); }
+}
+
+.seasonal-particle {
+  position: absolute;
+  top: -20px;
+  width: 12px;          /* 10〜14px の中央値 */
+  height: 12px;
+  border-radius: 50%;
+  opacity: 0;
+  animation-name: seasonal-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.seasonal-particle--spring {
+  background: var(--seasonal-spring);
+  border-radius: 50% 0 50% 50%;
+  width: 13px;
+  height: 13px;
+}
+.seasonal-particle--summer {
+  background: var(--seasonal-summer);
+  box-shadow: 0 0 8px var(--seasonal-summer);
+  width: 10px;
+  height: 10px;
+}
+.seasonal-particle--autumn {
+  background: var(--seasonal-autumn);
+  width: 14px;
+  height: 14px;
+  border-radius: 50% 50% 50% 0;
+}
+.seasonal-particle--winter {
+  background: var(--seasonal-winter);
+  width: 10px;
+  height: 10px;
+}
+
+@keyframes seasonal-drift {
+  0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 1; }
+  25%  { transform: translateY(25vh) translateX(15px) rotate(90deg); }
+  50%  { transform: translateY(55vh) translateX(-15px) rotate(180deg); }
+  75%  { transform: translateY(80vh) translateX(12px) rotate(270deg); }
+  92%  { opacity: 1; }
+  100% { transform: translateY(115vh) translateX(-8px) rotate(360deg); opacity: 0; }
+}
+
+/* =============================================================================
+   引く儀式（5 秒の段階設計）
+   タイムライン：
+     Phase 1 (0-300ms)     ：タップの commitment
+     Phase 2 (300-1100ms)  ：集中（スライド + 光輪 + 背景暗化）
+     Phase 3 (1100-1750ms) ：助走（浮き + 震え + 静止）
+     Phase 4 (1750-2650ms) ：開示（フリップ + 中盤フラッシュ + 朱波紋）
+     Phase 5 (2650-3800ms) ：内容開示（象徴 + 朱印 + カード名 + 飾り + 解釈文）
+     Phase 6 (4550-5050ms) ：連続日数バッジ滑り込み
+   legendary 限定（5050-8050ms）：金粉が舞う 3 秒
+   ============================================================================= */
+
+/* Phase 0：伏せ札のアイドル状態（呼吸 + 朱色発光が同期して脈動）
+   scale 1.0 ↔ 1.04 と box-shadow 0.30 ↔ 0.55 が 8 秒で連動。 */
+.fan-idle-breathe {
+  animation: fan-breathe 8s ease-in-out infinite;
+  border-radius: 6px;
+  will-change: transform, box-shadow;
+}
+@keyframes fan-breathe {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 14px var(--fan-glow-low),
+      0 4px 12px rgba(26, 22, 20, 0.08);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow:
+      0 0 26px var(--fan-glow-high),
+      0 6px 16px rgba(26, 22, 20, 0.10);
+  }
+}
+
+/* Hover/active を別レイヤー（.fan-hover-lift）に乗せることで、
+   breathing animation の transform と衝突せず両方が見える。 */
+.fan-hover-lift {
+  transition: transform 220ms ease-out;
+  will-change: transform;
+}
+.fan-slot-button:hover .fan-hover-lift { transform: translateY(-8px); }
+.fan-slot-button:active .fan-hover-lift { transform: translateY(2px); }
+.fan-slot-button { cursor: pointer; }
+.fan-slot-button:disabled { cursor: default; }
+.fan-slot-button:disabled .fan-hover-lift { transform: none; }
+
+/* 既定（is-ritual なし）状態 ＝ アニメ後の最終状態と一致させてフリッカー回避 */
+.chosen-slide       { transform: translateX(0) rotate(0); }
+.chosen-commit      { transform: scale(1); opacity: 1; }
+.chosen-lift        { transform: translateY(0); }
+.chosen-shake       { transform: rotate(0); }
+.chosen-flipper     { transform-style: preserve-3d; transform: rotateY(180deg); }
+.chosen-back-face,
+.chosen-front-face  {
+  position: absolute; inset: 0;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+.chosen-front-face  { transform: rotateY(180deg); }
+.chosen-symbol,
+.chosen-name,
+.chosen-seal,
+.chosen-decoration,
+.chosen-message,
+.chosen-streak-badge { opacity: 1; transform: none; }
+.chosen-halo,
+.ritual-dim,
+.ritual-flash,
+.ritual-ripple-ring,
+.legendary-pre-text,
+.legendary-particle  { opacity: 0; pointer-events: none; }
+
+/* ----- is-ritual 中の演出 ----- */
+/* delay 中も from-state にとどめるため、regular style として from-state を当てる。
+   forwards のみだと delay 中は base 値（center 位置）に戻ってしまい、
+   animation 開始時に元位置へ snap → スライドする見苦しい二段挙動になっていた。 */
+.is-ritual .chosen-slide {
+  transform: translateX(var(--draw-start-x, 0)) rotate(var(--draw-start-rotate, 0deg));
+  animation: r-slide 800ms 300ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+.is-ritual .chosen-commit {
+  animation: r-commit 600ms 0ms ease-out forwards;
+}
+.is-ritual .chosen-lift {
+  animation: r-lift 2250ms 1100ms ease-in-out forwards;
+}
+.is-ritual .chosen-shake {
+  /* 振れ幅・継続時間とも視認できるレベルまで拡大（±1deg 150ms → ±2.5deg 220ms） */
+  animation: r-shake 220ms 1400ms ease-in-out forwards;
+}
+.is-ritual .chosen-flipper {
+  transform: rotateY(0);
+  /* Problem 4：700ms → 1200ms に延長。フリップを「ゆっくり、躊躇い→加速→余韻」のドラマに */
+  animation: r-flip 1200ms 1750ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+.is-ritual .chosen-halo {
+  animation: r-halo 800ms 300ms ease-out forwards;
+}
+.is-ritual .ritual-dim {
+  animation: r-dim 5050ms 300ms ease-out forwards;
+}
+.is-ritual .ritual-flash {
+  /* flip 1200ms 化に伴い中盤位置を +250ms シフト（旧 2100ms → 2350ms） */
+  animation: r-flash 200ms 2350ms ease-out forwards;
+}
+.is-ritual .ritual-ripple-ring {
+  /* flip end 2450ms → 2950ms に伴い +500ms シフト */
+  animation: r-ripple 600ms 2950ms ease-out forwards;
+}
+
+/* 内容開示（Phase 5）：flip 延長に伴い、全要素のdelayを +500ms シフト */
+.is-ritual .chosen-symbol     { opacity: 0; animation: r-fade-scale 500ms 3150ms ease-out forwards; }
+.is-ritual .chosen-seal       { opacity: 0; animation: r-pop        200ms 3350ms ease-out forwards; }
+.is-ritual .chosen-name       { opacity: 0; animation: r-fade-in    400ms 3450ms ease-out forwards; }
+.is-ritual .chosen-decoration { opacity: 0; animation: r-pop        200ms 3550ms ease-out forwards; }
+.is-ritual .chosen-message    { opacity: 0; animation: r-fade-in    500ms 3750ms ease-out forwards; }
+/* Phase 6 streak badge：5050ms → 5550ms */
+.is-ritual .chosen-streak-badge {
+  opacity: 0;
+  animation: r-badge-slide 500ms 5550ms ease-out forwards;
+}
+
+/* 非選択カード：Phase 1 で 0.4 まで退く → Phase 2 で消える */
+.other-recede   { opacity: 1; transform: scale(1) translateY(0); }
+.is-ritual .other-recede {
+  animation: r-other-recede 1500ms 0ms ease-out forwards;
+}
+
+/* ----- Phase 4：金枠の一瞬の輝き（flip end 2450 → 2950ms に伴いシフト） ----- */
+.is-ritual .chosen-flipper { box-shadow: none; }
+.is-ritual .chosen-front-face {
+  animation: r-gold-flash 600ms 2950ms ease-out forwards;
+}
+
+/* ----- Legendary 限定追加（D-1〜D-6 強化版） ----- */
+
+/* D-5：前置きテキスト「極めて稀なる札」 */
+.is-ritual.is-legendary .legendary-pre-text {
+  animation: r-legendary-text 1500ms 1000ms ease-in-out forwards;
+}
+
+/* D-5：副題「✦ 大アルカナ ✦」 */
+.is-ritual.is-legendary .legendary-subtitle {
+  animation: r-legendary-subtitle 1500ms 1200ms ease-in-out forwards;
+}
+
+/* D-1：朱波紋 → 金波紋 */
+.is-ritual.is-legendary .ritual-ripple-ring {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 24px rgba(184, 148, 31, 0.50) !important;
+}
+
+/* D-1：白フラッシュ → 金フラッシュ */
+.is-ritual.is-legendary .ritual-flash {
+  background: var(--accent) !important;
+}
+
+/* D-2：カード周囲の金色オーラ（多重 box-shadow で 30/60px ぼかし）
+   D-3：札本体に薄い金色グラデーション */
+.is-ritual.is-legendary .chosen-front-face {
+  box-shadow:
+    inset 0 0 0 2.5px rgba(184, 148, 31, 0.70),
+    0 0 30px rgba(184, 148, 31, 0.55),
+    0 0 60px rgba(184, 148, 31, 0.35),
+    0 1px 2px var(--shadow),
+    0 8px 24px var(--shadow-medium);
+}
+.is-ritual.is-legendary .chosen-front-face > .card-washi-texture {
+  background: linear-gradient(
+    180deg,
+    var(--card) 0%,
+    var(--card) 35%,
+    rgba(184, 148, 31, 0.06) 70%,
+    rgba(184, 148, 31, 0.14) 100%
+  ) !important;
+}
+
+/* D-4：解釈文周りの飾り罫を金色強調（dot を大きく、線を金色に） */
+.is-ritual.is-legendary .chosen-decoration > div {
+  filter: drop-shadow(0 0 4px rgba(184, 148, 31, 0.6));
+}
+.is-ritual.is-legendary .chosen-decoration > div:first-child,
+.is-ritual.is-legendary .chosen-decoration > div:last-child {
+  width: 5px !important;
+  height: 5px !important;
+  background: var(--accent) !important;
+  opacity: 0.85;
+}
+.is-ritual.is-legendary .chosen-decoration > div:nth-child(2) {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--accent) 25%,
+    var(--accent) 75%,
+    transparent 100%
+  ) !important;
+  opacity: 0.7;
+  width: 40px !important;
+}
+
+/* D-6：金粉。上昇 16 個 + 落下 16 個 = 32 個 / 5 秒 */
+.is-ritual.is-legendary .legendary-particle-rise {
+  animation: r-legendary-particle-rise 5000ms ease-out forwards;
+}
+.is-ritual.is-legendary .legendary-particle-fall {
+  animation: r-legendary-particle-fall 5000ms ease-in forwards;
+}
+
+/* =============================================================================
+   キーフレーム
+   ============================================================================= */
+@keyframes r-slide {
+  from { transform: translateX(var(--draw-start-x, 0)) rotate(var(--draw-start-rotate, 0deg)); }
+  to   { transform: translateX(0) rotate(0deg); }
+}
+@keyframes r-commit {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(0.96); opacity: 0.85; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes r-lift {
+  /* delay 1100ms から 2250ms (＝1100〜3350ms の範囲)：浮く→保持→着地
+     振れ幅を視認できるレベルまで拡大（-10px → -16px） */
+  0%   { transform: translateY(0); }
+  13%  { transform: translateY(-16px); }   /* 1400ms：浮上完了 */
+  87%  { transform: translateY(-16px); }   /* 3050ms：朱波紋まで保持 */
+  100% { transform: translateY(0); }       /* 3350ms：着地 */
+}
+@keyframes r-shake {
+  /* ±2.5deg まで拡大して「ブルッと震える」感覚を強める */
+  0%   { transform: rotate(0); }
+  20%  { transform: rotate(2.5deg); }
+  45%  { transform: rotate(-2.5deg); }
+  70%  { transform: rotate(1.5deg); }
+  100% { transform: rotate(0); }
+}
+@keyframes r-flip {
+  from { transform: rotateY(0); }
+  to   { transform: rotateY(180deg); }
+}
+@keyframes r-halo {
+  /* より目立つ光輪。透明度・スケール幅とも増強 */
+  0%   { opacity: 0.85; transform: scale(0.9); }
+  100% { opacity: 0;    transform: scale(1.9); }
+}
+@keyframes r-dim {
+  0%   { background: rgba(0, 0, 0, 0); }
+  20%  { background: rgba(0, 0, 0, 0.10); }   /* 0.06 → 0.10 でやや強める */
+  100% { background: rgba(0, 0, 0, 0); }
+}
+@keyframes r-flash {
+  /* opacity だけで制御するシンプルな白フラッシュ。0.28 → 0.50 で視認性アップ */
+  0%   { opacity: 0; }
+  40%  { opacity: 0.50; }
+  100% { opacity: 0; }
+}
+@keyframes r-ripple {
+  /* 大きく外側へ拡散、初期に強い不透明度から fade で消える */
+  0%   { opacity: 0.85; transform: scale(0.5); }
+  100% { opacity: 0;    transform: scale(3.2); }
+}
+@keyframes r-gold-flash {
+  0%   { box-shadow:
+    inset 0 0 0 1px rgba(184, 148, 31, 0.30),
+    0 1px 2px var(--shadow); }
+  25%  { box-shadow:
+    inset 0 0 0 2px rgba(184, 148, 31, 0.85),
+    0 0 18px rgba(184, 148, 31, 0.45),
+    0 4px 8px var(--shadow-medium); }
+  100% { box-shadow:
+    inset 0 0 0 1px rgba(184, 148, 31, 0.30),
+    0 1px 2px var(--shadow),
+    0 4px 8px var(--shadow-medium); }
+}
+@keyframes r-fade-scale {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes r-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes r-pop {
+  from { opacity: 0; transform: scale(0); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes r-badge-slide {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes r-other-recede {
+  0%   { opacity: 1; transform: scale(1) translateY(0); }
+  20%  { opacity: 0.4; transform: scale(0.9) translateY(0); }
+  100% { opacity: 0;   transform: scale(0.9) translateY(20px); }
+}
+@keyframes r-legendary-text {
+  0%   { opacity: 0; transform: scale(0.96); }
+  20%  { opacity: 1; transform: scale(1); }
+  80%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.04); }
+}
+@keyframes r-legendary-particle-rise {
+  0%   { opacity: 0; transform: translateY(0) translateX(0) scale(0.4); }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.75; }
+  100% { opacity: 0; transform: translateY(-280px) translateX(var(--l-drift, 14px)) scale(1.25); }
+}
+@keyframes r-legendary-particle-fall {
+  0%   { opacity: 0; transform: translateY(0) translateX(0) scale(0.4); }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.75; }
+  100% { opacity: 0; transform: translateY(280px) translateX(var(--l-drift, 14px)) scale(1.25); }
+}
+@keyframes r-legendary-subtitle {
+  0%   { opacity: 0; transform: translateY(56px) scale(0.95); }
+  25%  { opacity: 0.9; transform: translateY(48px) scale(1); }
+  85%  { opacity: 0.9; transform: translateY(48px) scale(1); }
+  100% { opacity: 0; transform: translateY(44px) scale(1.05); }
+}
+
+/* =============================================================================
+   連続日数バッジのスタイル（札のような小さい和紙風）
+   ============================================================================= */
+.streak-badge-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 1px 2px var(--shadow), 0 2px 6px var(--shadow);
+}
+.streak-badge-wa-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  flex-shrink: 0;
+}
+.streak-badge-wa-number {
+  font-family: var(--font-cormorant), serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--foreground);
+  line-height: 1;
+}
+.streak-badge-wa-text {
+  font-family: var(--font-serif), serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--muted-foreground);
+  font-weight: 300;
+}
+
+/* Legendary 前置きテキスト */
+.legendary-pre-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif), serif;
+  font-size: 1.75rem;
+  letter-spacing: 0.40em;
+  color: var(--accent);
+  text-shadow:
+    0 0 6px rgba(184, 148, 31, 0.85),
+    0 0 18px rgba(184, 148, 31, 0.55),
+    0 0 36px rgba(184, 148, 31, 0.35);
+  z-index: 12;
+  font-weight: 400;
+}
+
+/* D-5：副題「✦ 大アルカナ ✦」。pre-text の少し下に配置 */
+.legendary-subtitle {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif), serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.30em;
+  color: var(--accent);
+  text-shadow:
+    0 0 6px rgba(184, 148, 31, 0.65),
+    0 0 14px rgba(184, 148, 31, 0.35);
+  z-index: 12;
+  font-weight: 300;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(48px);
+}
+
+/* Legendary 金粉粒子コンテナ：画面全体（上下から舞う） */
+.legendary-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  pointer-events: none;
+  overflow: hidden;
+}
+.legendary-particle {
+  position: absolute;
+  /* size は inline style で 11〜13px ランダム */
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow:
+    0 0 14px rgba(184, 148, 31, 0.85),
+    0 0 28px rgba(184, 148, 31, 0.50);
+  opacity: 0;
+}
+.legendary-particle-rise { bottom: 18%; }
+.legendary-particle-fall { top: 5%; }
+
+/* 暗化・フラッシュ・波紋の DOM 要素 */
+.ritual-dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  z-index: 6;
+}
+.ritual-flash {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 1);   /* 白固定、opacity だけで制御 */
+  z-index: 9;
+}
+.ritual-ripple-ring {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  border: 3px solid var(--primary);     /* 2px → 3px で視認性アップ */
+  box-shadow: 0 0 18px rgba(168, 52, 31, 0.35);
+}
+.dark .ritual-ripple-ring {
+  box-shadow: 0 0 18px rgba(201, 85, 62, 0.40);
+}
+.chosen-halo {
+  position: absolute;
+  inset: -10px;
+  border-radius: 10px;
+  box-shadow: 0 0 36px 12px rgba(168, 52, 31, 0.55);
+  z-index: -1;
+}
+.dark .chosen-halo {
+  box-shadow: 0 0 36px 12px rgba(201, 85, 62, 0.55);
+}
+
+/* =============================================================================
+   防御的オーバーライド
+   ============================================================================= */
+
+/* shadcn/vaul の Drawer Content が、ユーザー指定 className に position を奪われても
+   必ず画面下部 80% のモーダル形で表示されることを保証する。
+   過去事故：
+     1. DrawerContent に washi-texture を当てたとき .washi-texture { position: relative }
+        が Tailwind の .fixed をソース順で上書き → drawer が通常フロー描画され画面外
+     2. vaul の data-[vaul-drawer-direction=bottom]:inset-x-0 等の Tailwind arbitrary variant が
+        ビルドパイプラインで取りこぼされ、結果として右上に小さな箱で表示される事象
+   どちらにも耐えるよう、属性セレクタで強制スタイルを当てる。 */
+[data-slot="drawer-content"] {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 6rem !important;
+  max-height: 80vh !important;
+  z-index: 50 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-top-left-radius: 0.5rem !important;
+  border-top-right-radius: 0.5rem !important;
+  border-top: 1px solid var(--border) !important;
+  background: var(--background) !important;
+}
+
+[data-slot="drawer-overlay"] {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 49 !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ボトムシート上端の摘み（小さな横バー）。vaul はデフォルトでは hidden 時もあるため、
+   常に表示してモーダル感を出す。 */
+[data-slot="drawer-content"]::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 4px;
+  margin: 12px auto 0;
+  border-radius: 9999px;
+  background: var(--muted);
+  flex-shrink: 0;
+}
+
+/* =============================================================================
+   prefers-reduced-motion：すべて停止
+   ============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .seasonal-particle {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  .fan-idle-breathe { animation: none !important; }
+  .is-ritual *,
+  .is-ritual {
+    animation: none !important;
+    transition: none !important;
+  }
+  .is-ritual .chosen-flipper { transform: rotateY(180deg) !important; }
+  .is-ritual .chosen-symbol,
+  .is-ritual .chosen-name,
+  .is-ritual .chosen-seal,
+  .is-ritual .chosen-decoration,
+  .is-ritual .chosen-message,
+  .is-ritual .chosen-streak-badge {
+    opacity: 1 !important; transform: none !important;
+  }
+  .is-ritual .ritual-dim,
+  .is-ritual .ritual-flash,
+  .is-ritual .ritual-ripple-ring,
+  .is-ritual .chosen-halo,
+  .is-ritual .other-recede,
+  .legendary-pre-text,
+  .legendary-particle {
+    opacity: 0 !important;
+  }
+}

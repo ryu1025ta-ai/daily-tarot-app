@@ -1,0 +1,30 @@
+{
+  "name": "和の暦タロット",
+  "short_name": "和の暦",
+  "description": "神社でおみくじを引くような静謐な体験。24節気の暦に寄り添い、一日一枚の和タロットを綴る。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F0E8",
+  "theme_color": "#F5F0E8",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-light-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

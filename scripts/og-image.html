@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>OG Image</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+  }
+
+  body {
+    background: #F5F0E8;
+    font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', 'YuMincho', serif;
+    color: #1a1a1a;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 24px 0 24px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
+
+  /* 和紙テクスチャ風オーバーレイ（軽量、グラデ重ね＋極微ノイズ） */
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 900px 700px at 18% 35%, rgba(198, 138, 46, 0.07), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 82% 78%, rgba(185, 28, 28, 0.035), transparent 65%),
+      radial-gradient(circle at 50% 50%, transparent 55%, rgba(40, 28, 12, 0.05)),
+      repeating-linear-gradient(42deg, transparent 0 3px, rgba(60, 40, 20, 0.014) 3px 5px),
+      repeating-linear-gradient(132deg, transparent 0 4px, rgba(60, 40, 20, 0.010) 4px 7px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* 上下の極薄い余白ライン（OGP安全領域の意識） */
+  body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 0 1px rgba(60, 40, 20, 0.04);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .sun-card-area {
+    flex: 0 0 500px;
+    height: 500px;
+    position: relative;
+    z-index: 1;
+    margin-left: 8px;
+  }
+
+  .sun-svg {
+    width: 500px;
+    height: 500px;
+    color: #C68A2E;
+    display: block;
+    overflow: visible;
+  }
+
+  .sun-svg .text-primary {
+    color: #b91c1c;
+  }
+
+  .text-content {
+    flex: 1;
+    padding-left: 44px;
+    padding-right: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .title-ja {
+    font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', 'YuMincho', serif;
+    font-weight: 600;
+    font-size: 78px;
+    line-height: 1.18;
+    letter-spacing: 0.02em;
+    color: #1a1a1a;
+    white-space: nowrap;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 28px 0 22px;
+    max-width: 380px;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: #b91c1c;
+    opacity: 0.6;
+  }
+
+  .divider-dot {
+    width: 9px;
+    height: 9px;
+    background: #b91c1c;
+    border-radius: 50%;
+    opacity: 0.85;
+  }
+
+  .title-en {
+    font-family: 'Cormorant Garamond', 'EB Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 36px;
+    letter-spacing: 0.06em;
+    color: #5a4a38;
+    white-space: nowrap;
+  }
+
+  .desc {
+    margin-top: 36px;
+    font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', 'YuMincho', serif;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 1.6;
+    letter-spacing: 0.04em;
+    color: #2a2620;
+  }
+
+  /* 右下に小さな朱印アクセント（和の意匠） */
+  .seal {
+    position: absolute;
+    right: 50px;
+    bottom: 44px;
+    width: 56px;
+    height: 56px;
+    border: 1.5px solid #b91c1c;
+    border-radius: 6px;
+    color: #b91c1c;
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    z-index: 1;
+    opacity: 0.92;
+    background: rgba(245, 240, 232, 0.4);
+  }
+</style>
+</head>
+<body>
+  <div class="sun-card-area">
+    <svg
+      class="sun-svg"
+      viewBox="0 0 100 100"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <filter id="tarot-legendary-glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="0.7" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      <g filter="url(#tarot-legendary-glow)">
+
+        <!-- === 上部 空ゾーン === -->
+        <circle class="sun-far-halo" cx="50" cy="20" r="28" opacity="0.06" fill="currentColor" stroke="none" />
+        <circle class="sun-aureole" cx="50" cy="20" r="19" opacity="0.18" fill="currentColor" stroke="none" />
+        <circle class="sun-wave sun-wave-1" cx="50" cy="20" r="15" fill="none" stroke-width="0.5" opacity="0.35" />
+        <circle class="sun-wave sun-wave-2" cx="50" cy="20" r="19" fill="none" stroke-width="0.4" opacity="0.22" />
+
+        <!-- 主旭光（8方向） -->
+        <g class="sun-rays-a">
+          <line x1="50" y1="2"  x2="50" y2="8"  stroke-width="1.2" />
+          <line x1="50" y1="32" x2="50" y2="38" stroke-width="1.2" />
+          <line x1="32" y1="20" x2="38" y2="20" stroke-width="1.2" />
+          <line x1="62" y1="20" x2="68" y2="20" stroke-width="1.2" />
+          <line x1="35" y1="5"  x2="40" y2="10" stroke-width="1" />
+          <line x1="65" y1="5"  x2="60" y2="10" stroke-width="1" />
+          <line x1="35" y1="35" x2="40" y2="30" stroke-width="1" />
+          <line x1="65" y1="35" x2="60" y2="30" stroke-width="1" />
+        </g>
+
+        <!-- 補助光 -->
+        <g class="sun-rays-b" opacity="0.55">
+          <line x1="50" y1="0"  x2="50" y2="2"  stroke-width="0.7" />
+          <line x1="50" y1="38" x2="50" y2="40" stroke-width="0.7" />
+          <line x1="29" y1="20" x2="32" y2="20" stroke-width="0.7" />
+          <line x1="68" y1="20" x2="71" y2="20" stroke-width="0.7" />
+          <line x1="32" y1="3"  x2="34" y2="6"  stroke-width="0.7" />
+          <line x1="66" y1="3"  x2="68" y2="6"  stroke-width="0.7" />
+          <line x1="32" y1="37" x2="34" y2="34" stroke-width="0.7" />
+          <line x1="66" y1="37" x2="68" y2="34" stroke-width="0.7" />
+        </g>
+
+        <!-- 太陽本体 -->
+        <circle class="sun-disk" cx="50" cy="20" r="11" stroke-width="1.3" />
+        <circle class="text-primary sun-hub" fill="currentColor" cx="50" cy="20" r="2.4" stroke="none" />
+
+        <!-- === 中央 風景ゾーン === -->
+        <path d="M 2 58 L 10 50 L 16 56 L 22 48 L 28 56" fill="none" opacity="0.30" stroke-width="0.5" />
+        <path d="M 72 56 L 78 48 L 84 56 L 90 50 L 98 58" fill="none" opacity="0.30" stroke-width="0.5" />
+
+        <!-- 富士山 -->
+        <path d="M 30 58 L 50 38 L 70 58 Z" fill="currentColor" opacity="0.20" stroke="currentColor" stroke-width="0.7" />
+        <path d="M 41 47 Q 50 44 59 47 L 55 52 L 50 49 L 45 52 Z" fill="currentColor" opacity="0.40" stroke="none" />
+        <line x1="26" y1="60" x2="74" y2="60" opacity="0.25" stroke-width="0.4" stroke-dasharray="2 2" />
+        <line x1="2" y1="62" x2="98" y2="62" opacity="0.65" stroke-width="0.8" />
+
+        <!-- === 下部 前景ゾーン === -->
+        <!-- 茎 -->
+        <line x1="50" y1="95" x2="50" y2="74" stroke-width="1.6" opacity="0.80" />
+        <line x1="16" y1="95" x2="16" y2="82" stroke-width="1.2" opacity="0.75" />
+        <line x1="84" y1="95" x2="84" y2="82" stroke-width="1.2" opacity="0.75" />
+
+        <!-- 葉 -->
+        <path d="M 50 86 Q 42 84 38 88 Q 44 86 50 88" fill="none" stroke-width="0.9" opacity="0.75" />
+        <path d="M 50 86 Q 58 84 62 88 Q 56 86 50 88" fill="none" stroke-width="0.9" opacity="0.75" />
+        <path d="M 50 80 Q 44 78 42 82" fill="none" stroke-width="0.7" opacity="0.65" />
+        <path d="M 50 80 Q 56 78 58 82" fill="none" stroke-width="0.7" opacity="0.65" />
+        <path d="M 16 90 Q 10 88 8 92" fill="none" stroke-width="0.8" opacity="0.70" />
+        <path d="M 16 88 Q 22 86 24 90" fill="none" stroke-width="0.7" opacity="0.60" />
+        <path d="M 84 90 Q 90 88 92 92" fill="none" stroke-width="0.8" opacity="0.70" />
+        <path d="M 84 88 Q 78 86 76 90" fill="none" stroke-width="0.7" opacity="0.60" />
+
+        <!-- 中央向日葵（10花弁、cx=50, cy=74, r=9） -->
+        <g class="sun-sunflower sun-sunflower-2">
+          <ellipse cx="59.00" cy="74.00" rx="3.6" ry="1.8" transform="rotate(0.0 59.00 74.00)" stroke-width="0.6" />
+          <ellipse cx="57.28" cy="79.29" rx="3.6" ry="1.8" transform="rotate(36.0 57.28 79.29)" stroke-width="0.6" />
+          <ellipse cx="52.78" cy="82.56" rx="3.6" ry="1.8" transform="rotate(72.0 52.78 82.56)" stroke-width="0.6" />
+          <ellipse cx="47.22" cy="82.56" rx="3.6" ry="1.8" transform="rotate(108.0 47.22 82.56)" stroke-width="0.6" />
+          <ellipse cx="42.72" cy="79.29" rx="3.6" ry="1.8" transform="rotate(144.0 42.72 79.29)" stroke-width="0.6" />
+          <ellipse cx="41.00" cy="74.00" rx="3.6" ry="1.8" transform="rotate(180.0 41.00 74.00)" stroke-width="0.6" />
+          <ellipse cx="42.72" cy="68.71" rx="3.6" ry="1.8" transform="rotate(216.0 42.72 68.71)" stroke-width="0.6" />
+          <ellipse cx="47.22" cy="65.44" rx="3.6" ry="1.8" transform="rotate(252.0 47.22 65.44)" stroke-width="0.6" />
+          <ellipse cx="52.78" cy="65.44" rx="3.6" ry="1.8" transform="rotate(288.0 52.78 65.44)" stroke-width="0.6" />
+          <ellipse cx="57.28" cy="68.71" rx="3.6" ry="1.8" transform="rotate(324.0 57.28 68.71)" stroke-width="0.6" />
+          <circle cx="50" cy="74" r="5" stroke-width="1" />
+          <circle cx="48" cy="72" r="0.5" fill="currentColor" stroke="none" opacity="0.55" />
+          <circle cx="52" cy="73" r="0.5" fill="currentColor" stroke="none" opacity="0.55" />
+          <circle cx="49" cy="76" r="0.5" fill="currentColor" stroke="none" opacity="0.55" />
+          <circle cx="51" cy="75" r="0.5" fill="currentColor" stroke="none" opacity="0.55" />
+          <circle cx="50" cy="74" r="0.5" fill="currentColor" stroke="none" opacity="0.55" />
+        </g>
+        <circle class="text-primary sun-sunflower-core sun-sunflower-core-2" fill="currentColor" cx="50" cy="74" r="2.4" stroke="none" />
+
+        <!-- 左の向日葵（8花弁、cx=16, cy=82, r=4.5） -->
+        <g class="sun-sunflower sun-sunflower-1">
+          <ellipse cx="20.50" cy="82.00" rx="2" ry="1" transform="rotate(0.0 20.50 82.00)" stroke-width="0.5" />
+          <ellipse cx="19.18" cy="85.18" rx="2" ry="1" transform="rotate(45.0 19.18 85.18)" stroke-width="0.5" />
+          <ellipse cx="16.00" cy="86.50" rx="2" ry="1" transform="rotate(90.0 16.00 86.50)" stroke-width="0.5" />
+          <ellipse cx="12.82" cy="85.18" rx="2" ry="1" transform="rotate(135.0 12.82 85.18)" stroke-width="0.5" />
+          <ellipse cx="11.50" cy="82.00" rx="2" ry="1" transform="rotate(180.0 11.50 82.00)" stroke-width="0.5" />
+          <ellipse cx="12.82" cy="78.82" rx="2" ry="1" transform="rotate(225.0 12.82 78.82)" stroke-width="0.5" />
+          <ellipse cx="16.00" cy="77.50" rx="2" ry="1" transform="rotate(270.0 16.00 77.50)" stroke-width="0.5" />
+          <ellipse cx="19.18" cy="78.82" rx="2" ry="1" transform="rotate(315.0 19.18 78.82)" stroke-width="0.5" />
+          <circle cx="16" cy="82" r="2.4" stroke-width="0.7" />
+        </g>
+        <circle class="text-primary sun-sunflower-core sun-sunflower-core-1" fill="currentColor" cx="16" cy="82" r="1.2" stroke="none" />
+
+        <!-- 右の向日葵（8花弁、cx=84, cy=82, r=4.5） -->
+        <g class="sun-sunflower sun-sunflower-3">
+          <ellipse cx="88.50" cy="82.00" rx="2" ry="1" transform="rotate(0.0 88.50 82.00)" stroke-width="0.5" />
+          <ellipse cx="87.18" cy="85.18" rx="2" ry="1" transform="rotate(45.0 87.18 85.18)" stroke-width="0.5" />
+          <ellipse cx="84.00" cy="86.50" rx="2" ry="1" transform="rotate(90.0 84.00 86.50)" stroke-width="0.5" />
+          <ellipse cx="80.82" cy="85.18" rx="2" ry="1" transform="rotate(135.0 80.82 85.18)" stroke-width="0.5" />
+          <ellipse cx="79.50" cy="82.00" rx="2" ry="1" transform="rotate(180.0 79.50 82.00)" stroke-width="0.5" />
+          <ellipse cx="80.82" cy="78.82" rx="2" ry="1" transform="rotate(225.0 80.82 78.82)" stroke-width="0.5" />
+          <ellipse cx="84.00" cy="77.50" rx="2" ry="1" transform="rotate(270.0 84.00 77.50)" stroke-width="0.5" />
+          <ellipse cx="87.18" cy="78.82" rx="2" ry="1" transform="rotate(315.0 87.18 78.82)" stroke-width="0.5" />
+          <circle cx="84" cy="82" r="2.4" stroke-width="0.7" />
+        </g>
+        <circle class="text-primary sun-sunflower-core sun-sunflower-core-3" fill="currentColor" cx="84" cy="82" r="1.2" stroke="none" />
+
+        <!-- 地面の草 -->
+        <g opacity="0.45" stroke-width="0.4">
+          <line x1="4"  y1="95" x2="4"  y2="92" />
+          <line x1="10" y1="95" x2="10" y2="93" />
+          <line x1="26" y1="95" x2="26" y2="93" />
+          <line x1="34" y1="95" x2="34" y2="92" />
+          <line x1="42" y1="95" x2="42" y2="93" />
+          <line x1="58" y1="95" x2="58" y2="93" />
+          <line x1="66" y1="95" x2="66" y2="92" />
+          <line x1="74" y1="95" x2="74" y2="93" />
+          <line x1="90" y1="95" x2="90" y2="93" />
+          <line x1="96" y1="95" x2="96" y2="92" />
+        </g>
+
+        <!-- 黄金粒子（朱の点描、風景ゾーンに散らす） -->
+        <g class="sun-particle sun-particle-1"><circle class="text-primary" fill="currentColor" cx="30" cy="55" r="0.8" stroke="none" /></g>
+        <g class="sun-particle sun-particle-2"><circle class="text-primary" fill="currentColor" cx="68" cy="56" r="0.7" stroke="none" /></g>
+        <g class="sun-particle sun-particle-3"><circle class="text-primary" fill="currentColor" cx="44" cy="48" r="0.6" stroke="none" /></g>
+        <g class="sun-particle sun-particle-4"><circle class="text-primary" fill="currentColor" cx="58" cy="50" r="0.7" stroke="none" /></g>
+
+      </g>
+    </svg>
+  </div>
+
+  <div class="text-content">
+    <div class="title-ja">和の暦タロット</div>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-dot"></div>
+      <div class="divider-line"></div>
+    </div>
+    <div class="title-en">Wa-no-Koyomi Tarot</div>
+    <div class="desc">神社でおみくじを引くような、<br />静謐なタロット体験</div>
+  </div>
+
+  <div class="seal">和</div>
+</body>
+</html>
